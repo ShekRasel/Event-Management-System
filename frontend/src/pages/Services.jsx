@@ -24,7 +24,7 @@ const services = [
     image: 'src/assets/services images/venue food.avif',
     title: 'Venue Reservation and food',
     description: 'We offer delightful event venues that are perfectly suited to host your event and create lasting memories. Additionally, we provide exceptional food services to complement the occasion.',
-    link: '/food' // Updated link for the fourth service
+    link: '/venue' // Updated link for the fourth service
   }
 ];
 

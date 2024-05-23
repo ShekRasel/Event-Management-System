@@ -12,9 +12,11 @@ import Footer from './components/Footer';
 import CostumePage from './services/CostumePage';
 import PhotographerPage from './services/PhotographerPage';
 import MakeupPage from './services/MakeupPage';
-import FoodPage from './services/FoodPage';
+import VenuePage from './services/VenuePage';
 import PhotoDetailsPage from './services/PhotoDetailsPage';
 import CostumeDetailsPage from './services/CostumeDetailsPage';
+import MakeupDetailsPage from './services/MakeupDetailsPage';
+import VenueDetailsPage from './services/VenueDetailsPage';
 
 const App = () => {
   return (
@@ -33,7 +35,9 @@ const App = () => {
         <Route path="/photographer" element={<PhotographerPage />} /> {/* Update the route path */}
         <Route path="/photographers/:id" element={<PhotoDetailsPage />} /> {/* New route for PhotoDetailsPage */}
         <Route path="/makeup" element={<MakeupPage />} />
-        <Route path="/food" element={<FoodPage />} />
+        <Route path="/makeups/:id" element={<MakeupDetailsPage />} />
+        <Route path="/venue" element={<VenuePage />} />
+        <Route path="/venues/:id" element={<VenueDetailsPage />} />
       </Routes>
       <Footer/>
     </Router>
