@@ -1,90 +1,176 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const photographers = [
   {
     id: 1,
-    name: 'John Smith',
-    specialty: 'Wedding Photography',
-    location: 'New York City',
-    image: 'https://via.placeholder.com/200',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in risus finibus, gravida quam sit amet, interdum ex. Nulla facilisi. Sed condimentum ex in lacinia vestibulum.',
-    price: '$100 per hour'
+    name: 'LensCrafted Perspective',
+    price: '7000 BDT',
+    emoji: '❤️',
+    image: 'src/assets/services images/photographer/pic1.jpeg',
+    description: 'Capturing moments with a crafted lens, ensuring each shot tells a story.',
+    images: [
+      'src/assets/services images/photographer/Sub1/image1.jpeg',
+      'src/assets/services images/photographer/Sub1/image2.jpeg',
+      'src/assets/services images/photographer/Sub1/image3.webp',
+      'src/assets/services images/photographer/Sub1/image4.jpeg',
+      'src/assets/services images/photographer/Sub1/image5.jpeg',
+      'src/assets/services images/photographer/Sub1/image6.jpeg',
+    ]
   },
   {
     id: 2,
-    name: 'Emily Johnson',
-    specialty: 'Portrait Photography',
-    location: 'Los Angeles',
-    image: 'https://via.placeholder.com/200',
-    description: 'Suspendisse potenti. Duis lacinia, velit a convallis scelerisque, urna elit lobortis lorem, at congue risus turpis eu elit. Duis faucibus rhoncus sapien.',
-    price: '$120 per hour'
+    name: 'StellarShots Collective',
+    price: '5000 BDT',
+    emoji: '❤️',
+    image: 'src/assets/services images/photographer/pic8.jpg',
+    description: 'A collective of photographers dedicated to capturing stellar shots.',
+    images: [
+      'src/assets/services images/photographer/Sub2/image1.webp',
+      'src/assets/services images/photographer/Sub2/image2.jpeg',
+      'src/assets/services images/photographer/Sub2/image3.webp',
+      'src/assets/services images/photographer/Sub2/image4.webp',
+      'src/assets/services images/photographer/Sub2/image5.webp',
+      'src/assets/services images/photographer/Sub2/image6.webp',
+    ]
   },
   {
     id: 3,
-    name: 'David Lee',
-    specialty: 'Fashion Photography',
-    location: 'London',
-    image: 'https://via.placeholder.com/200'
+    name: 'FocusFrame Creations',
+    price: '4500 BDT',
+    emoji: '❤️',
+    image: 'src/assets/services images/photographer/pic2.jpg',
+    description: 'Focused on framing your precious moments with creativity and precision.',
+    images: [
+      'src/assets/services images/photographer/Sub3/image1.webp',
+      'src/assets/services images/photographer/Sub3/image2.jpeg',
+      'src/assets/services images/photographer/Sub3/image3.jpeg',
+      'src/assets/services images/photographer/Sub3/image4.jpeg',
+      'src/assets/services images/photographer/Sub3/image5.jpeg',
+      'src/assets/services images/photographer/Sub3/image6.jpeg',
+    ]
   },
   {
     id: 4,
-    name: 'Sophia Chen',
-    specialty: 'Landscape Photography',
-    location: 'Tokyo',
-    image: 'https://via.placeholder.com/200'
+    name: 'Ecliptic Moments Photography',
+    price: '3500 BDT',
+    emoji: '❤️',
+    image: 'src/assets/services images/photographer/pic3.jpg',
+    description: 'Specializing in capturing moments that are out of this world.',
+    images: [
+      'src/assets/services images/photographer/Sub4/image1.webp',
+      'src/assets/services images/photographer/Sub4/image2.webp',
+      'src/assets/services images/photographer/Sub4/image3.jpeg',
+      'src/assets/services images/photographer/Sub4/image4.jpeg',
+      'src/assets/services images/photographer/Sub4/image5.jpeg',
+      'src/assets/services images/photographer/Sub4/image6.jpeg',
+    ]
   },
   {
     id: 5,
-    name: 'Michael Brown',
-    specialty: 'Event Photography',
-    location: 'Paris',
-    image: 'https://via.placeholder.com/200'
+    name: 'ChromaClick Creative',
+    price: '3000 BDT',
+    emoji: '❤️',
+    image: 'src/assets/services images/photographer/pic4.jpeg',
+    description: 'Bringing vibrant colors and creativity to every click.',
+    images: [
+      'src/assets/services images/photographer/Sub5/image1.webp',
+      'src/assets/services images/photographer/Sub5/image2.jpeg',
+      'src/assets/services images/photographer/Sub5/image3.jpeg',
+      'src/assets/services images/photographer/Sub5/image4.jpeg',
+      'src/assets/services images/photographer/Sub5/image5.jpeg',
+      'src/assets/services images/photographer/Sub5/image6.jpeg',
+    ]
   },
   {
     id: 6,
-    name: 'Emma White',
-    specialty: 'Product Photography',
-    location: 'Berlin',
-    image: 'https://via.placeholder.com/200'
+    name: 'FrameFiesta Photography',
+    price: '6000 BDT',
+    emoji: '❤️',
+    image: 'src/assets/services images/photographer/pic5.jpg',
+    description: 'A celebration of moments captured through the lens.',
+    images: [
+      'src/assets/services images/photographer/Sub6/image1.jpeg',
+      'src/assets/services images/photographer/Sub6/image2.webp',
+      'src/assets/services images/photographer/Sub6/image3.jpeg',
+      'src/assets/services images/photographer/Sub6/image4.jpeg',
+      'src/assets/services images/photographer/Sub6/image5.jpeg',
+      'src/assets/services images/photographer/Sub6/image6.jpeg',
+    ]
   },
   {
     id: 7,
-    name: 'Daniel Garcia',
-    specialty: 'Travel Photography',
-    location: 'Sydney',
-    image: 'https://via.placeholder.com/200'
+    name: 'LensCrafted Perspectives',
+    price: '5000 BDT',
+    emoji: '❤️',
+    image: 'src/assets/services images/photographer/pic6.jpg',
+    description: 'Another perspective from the LensCrafted team, capturing unique stories.',
+    images: [
+      'src/assets/services images/photographer/Sub7/image1.webp',
+      'src/assets/services images/photographer/Sub7/image2.jpeg',
+      'src/assets/services images/photographer/Sub7/image3.webp',
+      'src/assets/services images/photographer/Sub7/image4.jpeg',
+      'src/assets/services images/photographer/Sub7/image5.jpeg',
+      'src/assets/services images/photographer/Sub7/image6.jpeg',
+    ]
   },
   {
     id: 8,
-    name: 'Olivia Taylor',
-    specialty: 'Street Photography',
-    location: 'Toronto',
-    image: 'https://via.placeholder.com/200'
-  },
+    name: 'Creative Click',
+    price: '4000 BDT',
+    emoji: '❤️',
+    image: 'src/assets/services images/photographer/pic7.jpg',
+    description: 'Creative and imaginative photography for every occasion.',
+    images: [
+      'src/assets/services images/photographer/Sub8/image1.jpeg',
+      'src/assets/services images/photographer/Sub8/image2.jpeg',
+      'src/assets/services images/photographer/Sub8/image3.jpeg',
+      'src/assets/services images/photographer/Sub8/image4.jpeg',
+      'src/assets/services images/photographer/Sub8/image5.jpeg',
+      'src/assets/services images/photographer/Sub8/image6.jpeg',
+    ]
+  }
 ];
+
 
 const PhotoDetailsPage = () => {
   const { id } = useParams();
-  const photographer = photographers.find(photographer => photographer.id === parseInt(id));
+  const [photographer, setPhotographer] = useState(null);
+
+  useEffect(() => {
+    // Simulating asynchronous loading
+    setTimeout(() => {
+      const selectedPhotographer = photographers.find((p) => p.id === parseInt(id));
+      setPhotographer(selectedPhotographer);
+    }, 1000);
+  }, [id]);
 
   if (!photographer) {
-    return <div>Photographer not found</div>;
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <img className="w-full h-auto" src={photographer.image} alt={photographer.name} />
+      <div className="flex flex-col lg:flex-row items-start lg:items-start">
+        <div className="lg:w-1/2 lg:max-h-screen lg:overflow-y-auto pr-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {photographer.images.map((imgSrc, index) => (
+              <img
+                key={index}
+                className="w-full h-auto object-contain"
+                src={import.meta.env.BASE_URL + imgSrc}
+                alt={`${photographer.name} image ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
-        <div>
-          <h1 className="text-4xl font-bold mb-2">{photographer.name}</h1>
-          <p className="text-xl font-semibold mb-2">{photographer.specialty}</p>
-          <p className="text-lg mb-2">{photographer.location}</p>
-          <p className="text-lg mb-4">{photographer.price}</p>
-          <p className="text-lg">{photographer.description}</p>
-          <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">Pay Now</button>
+        <div className="lg:w-1/2 lg:pl-8 lg:sticky lg:top-0">
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h1 className="text-4xl font-semibold italic text-stone-400 mb-4">{photographer.name} {photographer.emoji}</h1>
+            <p className="text-xl text-gray-700 mb-4">{photographer.description}</p>
+            <p className="text-2xl font-bold text-gray-800 mb-4">{photographer.price}</p>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Hire Now</button>
+          </div>
         </div>
       </div>
     </div>

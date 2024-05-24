@@ -6,28 +6,28 @@ const makeups = [
     id: 1,
     name: 'BlissFul Unions Parlor',
     emoji: '💖',
-    price: '70000 BDT',
+    price: '15000 BDT',
     image: 'src/assets/services images/Makeup and Decoration/pic4.jpg'
   },
   {
     id: 2,
     name: 'Harmony Haven Weddings',
     emoji: '💖',
-    price: '50000 BDT',
+    price: '5000 BDT',
     image: 'src/assets/services images/Makeup and Decoration/pic1.jpg'
   },
   {
     id: 3,
     name: 'Beauty queen',
     emoji: '💖',
-    price: '80000 BDT',
+    price: '20000 BDT',
     image: 'src/assets/services images/Makeup and Decoration/pic2.jpg'
   },
   {
     id: 4,
     name: 'Makeup Around',
     emoji: '💖',
-    price: '10000 BDT',
+    price: '18000 BDT',
     image: 'src/assets/services images/Makeup and Decoration/pic3.jpeg'
   }
 ];

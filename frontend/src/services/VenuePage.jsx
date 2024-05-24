@@ -13,49 +13,49 @@ const venues = [
     id: 2,
     name: 'Grand Ballroom',
     type: 'Indoor 🏰',
-    price: '23000.00 BDT',
+    price: '35000.00 BDT',
     image: 'src/assets/services images/venue res and food/pic2.avif'
   },
   {
     id: 3,
     name: 'Rooftop Lounge',
     type: 'Open-Air 🌇',
-    price: '154400.00 BDT',
+    price: '70000.00 BDT',
     image: 'src/assets/services images/venue res and food/pic3.avif'
   },
   {
     id: 4,
     name: 'Starlight Plaza',
     type: 'Beachfront 🏖️',
-    price: '254400.00 BDT',
+    price: '90000.00 BDT',
     image: 'src/assets/services images/venue res and food/pic4.avif'
   },
   {
     id: 5,
     name: 'Seaside Villa',
     type: 'Outdoor 🌳',
-    price: '13000.00 BDT',
+    price: '83000.00 BDT',
     image: 'src/assets/services images/venue res and food/pic5.avif'
   },
   {
     id: 6,
-    name: 'Grand Ballroom',
+    name: 'Sapphire Sky Convention Center',
     type: 'Indoor 🏰',
-    price: '20300.00 BDT',
+    price: '50300.00 BDT',
     image: 'src/assets/services images/venue res and food/pic6.avif'
   },
   {
     id: 7,
-    name: 'Rooftop Lounge',
+    name: 'The Grand Oak Manor',
     type: 'Open-Air 🌇',
-    price: '13500.00 BDT',
+    price: '93500.00 BDT',
     image: 'src/assets/services images/venue res and food/pic7.avif'
   },
   {
     id: 8,
     name: 'The Crystal Ballroom',
     type: 'Beachfront 🏖️',
-    price: '25300.00 BDT',
+    price: '65300.00 BDT',
     image: 'src/assets/services images/venue res and food/pic8.avif'
   }
 ];

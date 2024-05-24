@@ -7,56 +7,104 @@ const costumes = [
     name: 'White Toe hill and Bride beauty',
     category: 'Women',
     price: '2900.99 BDT',
-    image: 'src/assets/services images/costume ceremony/main image.jpg'
+    image: 'src/assets/services images/costume ceremony/main image.jpg',
+    description: 'A beautiful bridal gown perfect for your special day.',
+    images: [
+      'src/assets/services images/costume ceremony/main image.jpg',
+      'src/assets/services images/costume ceremony/additional1.jpg',
+      'src/assets/services images/costume ceremony/additional2.jpg'
+    ]
   },
   {
     id: 2,
     name: 'Aesthetic Bridal Gown and Newyork Bride V',
     category: 'Women',
     price: '3559.99 BDT',
-    image: 'src/assets/services images/costume ceremony/main1.avif'
+    image: 'src/assets/services images/costume ceremony/main1.avif',
+    description: 'An aesthetic bridal gown for the modern bride.',
+    images: [
+      'src/assets/services images/costume ceremony/main1.avif',
+      'src/assets/services images/costume ceremony/additional3.jpg',
+      'src/assets/services images/costume ceremony/additional4.jpg'
+    ]
   },
   {
     id: 3,
     name: 'Stylish Sherwani and Panjabi Arong',
     category: 'Men',
     price: '3999.99 BDT',
-    image: 'src/assets/services images/costume ceremony/main2.jpg'
+    image: 'src/assets/services images/costume ceremony/main2.jpg',
+    description: 'Stylish Sherwani perfect for traditional ceremonies.',
+    images: [
+      'src/assets/services images/costume ceremony/main2.jpg',
+      'src/assets/services images/costume ceremony/additional5.jpg',
+      'src/assets/services images/costume ceremony/additional6.jpg'
+    ]
   },
   {
     id: 4,
     name: 'Wheat Indian Sherwani and Asus',
     category: 'Men',
     price: '4444.99 BDT',
-    image: 'src/assets/services images/costume ceremony/main3.jpg'
+    image: 'src/assets/services images/costume ceremony/main3.jpg',
+    description: 'A classic Indian Sherwani in a wheat color.',
+    images: [
+      'src/assets/services images/costume ceremony/main3.jpg',
+      'src/assets/services images/costume ceremony/additional7.jpg',
+      'src/assets/services images/costume ceremony/additional8.jpg'
+    ]
   },
   {
     id: 5,
     name: 'Bridal Suits',
     category: 'Men',
     price: '8000.99 BDT',
-    image: 'src/assets/services images/costume ceremony/main4.jpg'
+    image: 'src/assets/services images/costume ceremony/main4.jpg',
+    description: 'Elegant bridal suits for a sophisticated look.',
+    images: [
+      'src/assets/services images/costume ceremony/main4.jpg',
+      'src/assets/services images/costume ceremony/additional9.jpg',
+      'src/assets/services images/costume ceremony/additional10.jpg'
+    ]
   },
   {
     id: 6,
     name: 'Women Lovely',
     category: 'Women',
     price: '8888.99 BDT',
-    image: 'src/assets/services images/costume ceremony/main5.jpg'
+    image: 'src/assets/services images/costume ceremony/main5.jpg',
+    description: 'Lovely dress for women, perfect for special occasions.',
+    images: [
+      'src/assets/services images/costume ceremony/main5.jpg',
+      'src/assets/services images/costume ceremony/additional11.jpg',
+      'src/assets/services images/costume ceremony/additional12.jpg'
+    ]
   },
   {
     id: 7,
     name: 'Women new stylist Dress',
     category: 'Women',
     price: '4000.99 BDT',
-    image: 'src/assets/services images/costume ceremony/main6.jpg'
+    image: 'src/assets/services images/costume ceremony/main6.jpg',
+    description: 'New stylist dress for women, modern and trendy.',
+    images: [
+      'src/assets/services images/costume ceremony/main6.jpg',
+      'src/assets/services images/costume ceremony/additional13.jpg',
+      'src/assets/services images/costume ceremony/additional14.jpg'
+    ]
   },
   {
     id: 8,
     name: 'Slylist Jacket',
     category: 'Men',
     price: '5555.99 BDT',
-    image: 'src/assets/services images/costume ceremony/main7.jpg'
+    image: 'src/assets/services images/costume ceremony/main7.jpg',
+    description: 'A stylish jacket for men, perfect for casual and formal events.',
+    images: [
+      'src/assets/services images/costume ceremony/main7.jpg',
+      'src/assets/services images/costume ceremony/additional15.jpg',
+      'src/assets/services images/costume ceremony/additional16.jpg'
+    ]
   },
 ];
 
