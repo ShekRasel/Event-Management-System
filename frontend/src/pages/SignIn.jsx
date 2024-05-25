@@ -29,30 +29,32 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row min-h-screen">
-      <div className="sm:w-1/2 bg-white flex items-center justify-center">
-        <div className="max-w-md w-full py-12 px-8">
-          <h2 className="text-3xl font-semibold text-center mb-6">Sign in to Eventhive</h2>
-          <p className="text-center text-gray-600 mb-4">Don't have an account? <a href="/signup" className="text-blue-500">Sign Up</a></p>
-          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-          <form onSubmit={handleSignIn}>
-            <div className="mb-4">
-              <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500" required />
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row w-full max-w-7xl bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="sm:w-1/2 flex items-center justify-center p-4 sm:p-8">
+          <div className="relative w-full h-full">
+            <img src="images/signinPic.avif" alt="SignIn" className="h-64 sm:h-96 md:h-[750px] w-full object-cover rounded-lg" />
+            <div className="absolute bottom-0 left-0 right-0 text-center text-white bg-black bg-opacity-5 py-4">
+              <p className="font-bold text-5xl">Welcome back!</p>
+              <p className="text-2xl">Sign in to access your account</p>
             </div>
-            <div className="mb-4">
-              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500" required />
-            </div>
-            <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Sign In</button>
-          </form>
-          <button className="w-full bg-red-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-red-600 focus:outline-none focus:bg-red-600">Sign In with Google</button>
+          </div>
         </div>
-      </div>
-      <div className="sm:w-1/2 relative">
-        <div className="relative mt-20 mr-9">
-          <img src="images/signinPic.avif" alt="SignIn" className="max-h-full sm:max-w-full sm:h-auto" />
-          <div className="absolute bottom-0 left-0 right-0 text-center text-white bg-black bg-opacity-0 py-4">
-            <p className="font-bold text-5xl">Welcome back!</p>
-            <p className="text-2xl">Sign in to access your account</p>
+        <div className="sm:w-1/2 flex items-center justify-center p-4 sm:p-8">
+          <div className="max-w-lg w-full">
+            <h2 className="text-3xl font-bold text-center mb-6">Sign in to Eventhive</h2>
+            <p className="text-center font-bold text-gray-600 mb-4">Don't have an account? <a href="/signup" className="text-blue-500 font-bold">Sign Up</a></p>
+            {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+            <form onSubmit={handleSignIn}>
+              <div className="mb-4">
+                <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" required />
+              </div>
+              <div className="mb-4">
+                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" required />
+              </div>
+              <button type="submit" className="w-full font-bold bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Sign In</button>
+            </form>
+            <button className="w-full font-bold bg-red-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-red-600 focus:outline-none focus:bg-red-600">Sign In with Google</button>
           </div>
         </div>
       </div>

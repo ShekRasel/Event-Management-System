@@ -1,48 +1,66 @@
-// AuthContext.jsx
-// No changes needed here, assuming profilePhoto is correctly stored in the state.
-
-// Navbar.jsx
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../assets/logo.png';
+import { Link, useLocation } from 'react-router-dom';
+import logo from '../assets/logo.jpg';
 import { AuthContext } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [color, setColor] = useState('red');
   const { isLoggedIn, profilePhoto, logout } = useContext(AuthContext);
+  const location = useLocation();
 
   useEffect(() => {
     console.log("isLoggedIn:", isLoggedIn);
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+    let colorIndex = 0;
+
+    const changeColor = () => {
+      setColor(colors[colorIndex]);
+      colorIndex = (colorIndex + 1) % colors.length;
+    };
+
+    const intervalId = setInterval(changeColor, 500); // Change color every 500ms
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
+  }, []);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  
-console.log("Profile photo path:", profilePhoto);
 
+  const getLinkClasses = (path) => {
+    return location.pathname === path
+      ? "text-red-500 font-bold"
+      : "text-gray-700 hover:text-gray-900 font-semibold hover:underline";
+  };
+
+  const profilePhotoClass = "w-10 h-10 rounded-full border-4 border-green-500";
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-10">
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="flex items-center">
           <img src={logo} alt="Logo" className="h-10 mr-4" />
-          <div className="text-2xl font-semibold text-gray-800">EventExpert</div>
+          <div className="text-2xl font-semibold" style={{ color }}>EventExpert</div>
         </div>
         <div className="flex items-center space-x-4">
           <div className="hidden md:flex space-x-6">
-            <Link to="/" className="text-gray-700 hover:text-gray-900">Home</Link>
-            <Link to="/services" className="text-gray-700 hover:text-gray-900">Services</Link>
-            <Link to="/orders" className="text-gray-700 hover:text-gray-900">Orders</Link>
-            <Link to="/contact" className="text-gray-700 hover:text-gray-900">Contact</Link>
-            <Link to="/add-product" className="text-gray-700 hover:text-gray-900">Add Product</Link>
+            <Link to="/" className={getLinkClasses("/")}>Home</Link>
+            <Link to="/services" className={getLinkClasses("/services")}>Services</Link>
+            <Link to="/orders" className={getLinkClasses("/orders")}>Orders</Link>
+            <Link to="/contact" className={getLinkClasses("/contact")}>Contact</Link>
+            <Link to="/add-product" className={getLinkClasses("/add-product")}>Add Product</Link>
           </div>
-          {!isLoggedIn && <Link to="/signup" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 hidden md:block">Sign Up</Link>}
+          {!isLoggedIn && <Link to="/signup" className="bg-blue-500 font-bold text-white px-4 py-2 rounded hover:bg-blue-600 hidden md:block">Sign Up</Link>}
           {isLoggedIn && (
             <>
               {profilePhoto && (
-              <img src={`http://localhost:3000/${profilePhoto}`} alt="profile" className="w-10 h-10 rounded-full" />)}
-              <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 hidden md:block">SignOut</button>
+                <img src={`http://localhost:3000/${profilePhoto}`} alt="profile" className={profilePhotoClass} />
+              )}
+              <button onClick={logout} className="bg-red-500 font-bold text-white px-4 py-2 rounded hover:bg-red-600 hidden md:block">Sign Out</button>
             </>
           )}
         </div>
@@ -56,16 +74,16 @@ console.log("Profile photo path:", profilePhoto);
       </div>
       {isOpen && (
         <div className="md:hidden bg-white shadow-md">
-          <Link to="/" className="block text-gray-700 hover:text-gray-900 px-4 py-2" onClick={toggleMenu}>Home</Link>
-          <Link to="/services" className="block text-gray-700 hover:text-gray-900 px-4 py-2" onClick={toggleMenu}>Services</Link>
-          <Link to="/orders" className="block text-gray-700 hover:text-gray-900 px-4 py-2" onClick={toggleMenu}>Orders</Link>
-          <Link to="/contact" className="block text-gray-700 hover:text-gray-900 px-4 py-2" onClick={toggleMenu}>Contact</Link>
-          <Link to="/add-product" className="block text-gray-700 hover:text-gray-900 px-4 py-2" onClick={toggleMenu}>Add Product</Link>
+          <Link to="/" className={`block px-4 py-2 ${getLinkClasses("/")}`} onClick={toggleMenu}>Home</Link>
+          <Link to="/services" className={`block px-4 py-2 ${getLinkClasses("/services")}`} onClick={toggleMenu}>Services</Link>
+          <Link to="/orders" className={`block px-4 py-2 ${getLinkClasses("/orders")}`} onClick={toggleMenu}>Orders</Link>
+          <Link to="/contact" className={`block px-4 py-2 ${getLinkClasses("/contact")}`} onClick={toggleMenu}>Contact</Link>
+          <Link to="/add-product" className={`block px-4 py-2 ${getLinkClasses("/add-product")}`} onClick={toggleMenu}>Add Product</Link>
           {!isLoggedIn && <Link to="/signup" className="block bg-blue-500 text-white text-center px-4 py-2 rounded hover:bg-blue-600 m-2" onClick={toggleMenu}>Sign Up</Link>}
           {isLoggedIn && (
             <>
-              {profilePhoto && <img src={`/backend/uploads${profilePhoto}`} className="w-10 h-10 rounded-full mx-auto my-2" />}
-              <button onClick={logout} className="block bg-red-500 text-white text-center px-4 py-2 rounded hover:bg-red-600 m-2">SignOut</button>
+              {profilePhoto && <img src={`http://localhost:3000/${profilePhoto}`} alt="profile" className={profilePhotoClass} />}
+              <button onClick={logout} className="block bg-red-500 text-white font-bold text-center px-4 py-2 rounded hover:bg-red-600 m-2">Sign Out</button>
             </>
           )}
         </div>
