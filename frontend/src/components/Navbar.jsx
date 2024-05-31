@@ -10,7 +10,6 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("isLoggedIn:", isLoggedIn);
   }, [isLoggedIn]);
 
   useEffect(() => {
