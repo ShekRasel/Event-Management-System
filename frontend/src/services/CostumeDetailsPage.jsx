@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams,useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const costumes = [
   {
@@ -136,27 +135,48 @@ const costumes = [
 
 const CostumeDetailsPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [costume, setCostume] = useState(null);
-  const { isLoggedIn } = useContext(AuthContext);
+  const { userLoggedIn , setUserLoggedIn} = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
-      const selectedCostume = costumes.find((c) => c.id === parseInt(id));
+      const selectedCostume = costumes.find((m) => m.id === parseInt(id));
       setCostume(selectedCostume);
     }, 1000);
   }, [id]);
 
-  const handleBookNow = () => {
-    if (!isLoggedIn) {
-      // Redirect to sign-in page if not logged in
-      window.location.href = '/signin'; // Update the path as per your routes
+  const handleBookNow = async () => {
+    if (!userLoggedIn) {
+       navigate('/signin');
       return;
     }
-    
-    const existingServices = JSON.parse(localStorage.getItem('services')) || [];
-    const newServices = [...existingServices, { eventName: costume.name, price: costume.price }];
-    localStorage.setItem('services', JSON.stringify(newServices));
-    window.location.href = "/Orders";
+  
+    try {
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        console.error('Token is undefined');
+        return; // Handle missing token scenario
+      }
+  
+      await axios.post('http://localhost:3000/api/services', {
+        name: costume.name,
+        price: costume.price,
+        bookedBy: userId
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      // Redirect to Orders page
+      navigate('/orders');
+    } catch (error) {
+      console.error('Error booking service:', error);
+      // Display an error message to the user (e.g., using Toast notifications)
+    }
   };
 
   if (!costume) {

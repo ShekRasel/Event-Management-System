@@ -6,6 +6,7 @@ const multer = require('multer');
 const path = require('path');
 const authRoutes = require('./routes/authRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,6 +32,7 @@ const upload = multer({ storage: storage });
 // Routes
 app.use('/api', authRoutes);
 app.use('/api', serviceRoutes)
+app.use('/api', paymentRoutes);
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/EventManagement')
   .then(() => {

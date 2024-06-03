@@ -72,10 +72,9 @@ const MakeupDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [makeup, setMakeup] = useState(null);
-  const [userLoggedIn, setUserLoggedIn] = useState(true); // Assuming you have a state to track user authentication
+  const [userLoggedIn, setUserLoggedIn] = useState(true);
 
   useEffect(() => {
-    // Simulating asynchronous loading
     setTimeout(() => {
       const selectedMakeup = makeups.find((m) => m.id === parseInt(id));
       setMakeup(selectedMakeup);
@@ -84,7 +83,6 @@ const MakeupDetailsPage = () => {
 
   const handleBookNow = async () => {
     if (!userLoggedIn) {
-      // Redirect to SignIn page
       navigate('/signin');
       return;
     }
@@ -92,7 +90,6 @@ const MakeupDetailsPage = () => {
     try {
       const userId = localStorage.getItem('userId');
       const token = localStorage.getItem('token');
-      console.log("Booking token:", token);
   
       if (!token) {
         console.error('Token is undefined');

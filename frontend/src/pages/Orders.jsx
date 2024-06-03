@@ -1,10 +1,12 @@
-// src/components/OrdersPage.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { FaTimes } from 'react-icons/fa'; // Import cross icon
+import { FaTimes } from 'react-icons/fa';
+import { AuthContext } from '../context/AuthContext';
+import {loadStripe} from '@stripe/stripe-js';
 
 const Orders = () => {
   const [services, setServices] = useState([]);
+  const { profilePhoto, logout } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -32,77 +34,104 @@ const Orders = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      setServices(services.filter(service => service._id !== serviceId));
+      setServices(prevServices => prevServices.filter(service => service._id !== serviceId));
     } catch (error) {
-      console.error('Error deleting service:', error);
+      console.error('Error deleting service:', error.response.data.message);
     }
   };
 
-  const handlePay = (serviceId) => {
-    // Add your payment logic here
-    console.log(`Pay for service with ID: ${serviceId}`);
+  const makePayment = async (serviceId, amount) => {
+    try {
+      const stripe = await loadStripe("pk_test_51PAtfyP6UnHdutC2LTD4KkQZZSJCeCZzlNgViwthME8ERF8YmOl7cnty7QdpYYUAB7FnA0eS0IbYYkWZy0XvCPCA00eSGArlVS");
+      amount = parseInt(amount.replace(' BDT', ''));
+      const body = {
+        serviceId,
+        amount,
+      };
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      const response = await fetch("http://localhost:3000/api/create-checkout-session", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create Stripe checkout session');
+      }
+
+      const session = await response.json();
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+  
+      if (result.error) {
+        console.error('Error redirecting to Stripe checkout:', result.error.message);
+      }
+    } catch (error) {
+      console.error('Error during payment:', error);
+    }
+  };
+  
+
+  const handleSignOut = () => {
+    logout();
+    window.location.reload();
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100 p-6">
-      {/* Left side cart */}
-      <div className="w-1/4 bg-white p-4 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Cart</h2>
+    <div className="flex min-h-screen bg-gray-100 p-6 justify-center">
+      <div className="w-full max-w-3xl bg-white p-4 lg:p-6 rounded-lg shadow-lg">
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            {profilePhoto && (
+              <img src={`http://localhost:3000/${profilePhoto}`} alt="Profile" className="w-16 h-16 rounded-full mb-2" />
+            )}
+          </div>
+          <div>
+            <button onClick={handleSignOut} className="bg-red-500 text-white px-4 py-2 rounded">
+              Sign Out
+            </button>
+          </div>
+        </div>
+        <h2 className="text-2xl font-bold text-center mb-4">Your Booked Services</h2>
         {services.length === 0 ? (
-          <p>You have no booked services yet.</p>
+          <p className="text-center text-gray-500">You have no booked services yet.</p>
         ) : (
-          <ul>
-            {services.map((service) => (
-              <li key={service._id} className="mb-2">
-                <div className="flex justify-between items-center">
-                  <span>{service.name}</span>
-                  <span>${service.price}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      {/* Right side cart table */}
-      <div className="w-3/4 bg-white p-4 ml-4 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Your Booked Services</h2>
-        {services.length === 0 ? (
-          <p>You have no booked services yet.</p>
-        ) : (
-          <table className="min-w-full bg-white">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b">Event Name</th>
-                <th className="py-2 px-4 border-b">Price</th>
-                <th className="py-2 px-4 border-b">Address</th>
-                <th className="py-2 px-4 border-b">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {services.map((service) => (
-                <tr key={service._id}>
-                  <td className="py-2 px-4 border-b">{service.name}</td>
-                  <td className="py-2 px-4 border-b">${service.price}</td>
-                  <td className="py-2 px-4 border-b">{service.address}</td>
-                  <td className="py-2 px-4 border-b">
-                    <button
-                      onClick={() => handlePay(service._id)}
-                      className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-                    >
-                      Pay
-                    </button>
-                    <button
-                      onClick={() => handleDelete(service._id)}
-                      className="bg-red-500 text-white px-4 py-2 rounded"
-                    >
-                      <FaTimes />
-                    </button>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full lg:w-auto mx-auto divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="py-3 px-3 lg:px-6 text-left text-base font-medium text-gray-500 uppercase tracking-wider">Event Name</th>
+                  <th className="py-3 px-3 lg:px-6 text-left text-base font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                  <th className="py-3 px-3 lg:px-6 text-left text-base font-medium text-gray-500 uppercase tracking-wider">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {services.map((service) => (
+                  <tr key={service._id}>
+                    <td className="py-2 px-3 lg:px-6 whitespace-nowrap text-sm lg:text-base">{service.name}</td>
+                    <td className="py-2 px-3 lg:px-6 whitespace-nowrap text-sm lg:text-base">${service.price}</td>
+                    <td className="py-2 px-3 lg:px-6 whitespace-nowrap text-sm lg:text-base">
+                      <button
+                        onClick={() => makePayment(service._id, service.price)}
+                        className="bg-green-500 text-white px-3 py-1 rounded mr-2 lg:px-4 lg:py-2"
+                      >
+                        Pay
+                      </button>
+                      <button
+                        onClick={() => handleDelete(service._id)}
+                        className="bg-red-500 text-white px-3 py-1 rounded lg:px-4 lg:py-2"
+                      >
+                        <FaTimes />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>
