@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { useParams } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const venues = [
   {
@@ -135,6 +136,7 @@ const venues = [
 const VenueDetailsPage = () => {
   const { id } = useParams();
   const [venue, setVenue] = useState(null);
+  const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     // Simulating asynchronous loading
@@ -143,6 +145,19 @@ const VenueDetailsPage = () => {
       setVenue(selectedVenue);
     }, 1000);
   }, [id]);
+
+  const handleBookNow = () => {
+    if (!isLoggedIn) {
+      // Redirect to sign-in page if not logged in
+      window.location.href = '/signin'; // Update the path as per your routes
+      return;
+    }
+    
+    const existingServices = JSON.parse(localStorage.getItem('services')) || [];
+    const newServices = [...existingServices, { eventName: venue.name, price: venue.price }];
+    localStorage.setItem('services', JSON.stringify(newServices));
+    window.location.href = "/Orders";
+  };
 
   if (!venue) {
     return <div>Loading...</div>;
@@ -168,7 +183,9 @@ const VenueDetailsPage = () => {
             <h1 className="text-4xl font-bold mb-4">{venue.name} {venue.type}</h1>
             <p className="text-xl text-gray-700 mb-4">{venue.description}</p>
             <p className="text-2xl font-bold text-gray-800 mb-4">{venue.price}</p>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Book Now</button>
+            <button 
+              onClick={handleBookNow}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Book Now</button>
           </div>
         </div>
       </div>

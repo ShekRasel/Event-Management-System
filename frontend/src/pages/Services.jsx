@@ -52,11 +52,11 @@ const Service = () => {
                 alt={service.title}
                 className="w-full h-auto max-h-96 object-cover transition-transform duration-300 transform group-hover:scale-105"
               />
-              <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg bg-black bg-opacity-75">
+              <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg bg-black bg-opacity-65">
                 <h1 className="text-white text-xl mb-2 transition-colors duration-300 group-hover:text-gray-200" style={{ color: 'rgb(36,145,184,255)' }}>{service.title}</h1>
                 <p className="text-white font-bold mb-4 text-center">{service.description}</p>
                 <button
-                  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full transition duration-300"
+                  className="bg-blue-500  hover:bg-blue-600 text-white py-2 px-8 font-semibold rounded-full transition duration-300"
                   onClick={() => navigate(service.link)}
                 >
                   More
@@ -77,11 +77,11 @@ const Service = () => {
                 alt={service.title}
                 className="w-full h-auto max-h-96 object-cover transition-transform duration-300 transform group-hover:scale-105"
               />
-              <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg bg-black bg-opacity-75">
+              <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg bg-black bg-opacity-65">
                 <h1 className="text-white text-xl mb-2 transition-colors duration-300 group-hover:text-gray-200" style={{ color: 'rgb(36,145,184,255)' }}>{service.title}</h1>
                 <p className="text-white font-bold mb-4 text-center">{service.description}</p>
                 <button
-                  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full transition duration-300"
+                  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-8 font-semibold rounded-full transition duration-300"
                   onClick={() => navigate(service.link)}
                 >
                   More

@@ -2,11 +2,15 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext'; // Import the AuthContext
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import the eye icons
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
   const navigate = useNavigate();
   const { login } = useContext(AuthContext); // Get the login function from the AuthContext
 
@@ -14,15 +18,18 @@ const SignIn = () => {
     event.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/api/signin', { email, password });
-      console.log(response.data);
-      const { profilePhoto } = response.data;
-      login(profilePhoto); // Call the login function upon successful sign-in and pass the profile photo
+      const { profilePhoto, UserId, token } = response.data;
+
+      localStorage.setItem("token", token)
+      login(profilePhoto, UserId);
       navigate('/');
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setError('Please sign up first.');
+        toast.error('Please sign up first.');
       } else {
         setError('Error signing in. Please try again later.');
+        toast.error('Error signing in. Please try again later.');
       }
       console.error('Error signing in:', error);
     }
@@ -49,15 +56,28 @@ const SignIn = () => {
               <div className="mb-4">
                 <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" required />
               </div>
-              <div className="mb-4">
-                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" required />
+              <div className="mb-4 relative">
+                <input 
+                  type={showPassword ? 'text' : 'password'} 
+                  placeholder="Password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" 
+                  required 
+                />
+                <div 
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-700 cursor-pointer" 
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
               </div>
               <button type="submit" className="w-full font-bold bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Sign In</button>
             </form>
-            <button className="w-full font-bold bg-red-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-red-600 focus:outline-none focus:bg-red-600">Sign In with Google</button>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

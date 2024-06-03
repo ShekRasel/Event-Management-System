@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const costumes = [
   {
@@ -135,14 +137,27 @@ const costumes = [
 const CostumeDetailsPage = () => {
   const { id } = useParams();
   const [costume, setCostume] = useState(null);
+  const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    // Simulating asynchronous loading
     setTimeout(() => {
       const selectedCostume = costumes.find((c) => c.id === parseInt(id));
       setCostume(selectedCostume);
     }, 1000);
   }, [id]);
+
+  const handleBookNow = () => {
+    if (!isLoggedIn) {
+      // Redirect to sign-in page if not logged in
+      window.location.href = '/signin'; // Update the path as per your routes
+      return;
+    }
+    
+    const existingServices = JSON.parse(localStorage.getItem('services')) || [];
+    const newServices = [...existingServices, { eventName: costume.name, price: costume.price }];
+    localStorage.setItem('services', JSON.stringify(newServices));
+    window.location.href = "/Orders";
+  };
 
   if (!costume) {
     return <div>Loading...</div>;
@@ -168,7 +183,9 @@ const CostumeDetailsPage = () => {
             <h1 className="text-4xl font-semibold italic text-stone-400 mb-4">{costume.name}</h1>
             <p className="text-xl text-gray-700 mb-4">{costume.description}</p>
             <p className="text-2xl font-bold text-gray-800 mb-4">{costume.price}</p>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Buy Now</button>
+            <button
+              onClick={handleBookNow}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg">Buy Now</button>
           </div>
         </div>
       </div>

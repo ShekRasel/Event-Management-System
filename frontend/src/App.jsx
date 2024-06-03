@@ -17,6 +17,7 @@ import PhotoDetailsPage from './services/PhotoDetailsPage';
 import CostumeDetailsPage from './services/CostumeDetailsPage';
 import MakeupDetailsPage from './services/MakeupDetailsPage';
 import VenueDetailsPage from './services/VenueDetailsPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -25,15 +26,19 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/orders" element={<Orders />} />
+        <Route path="/orders" element={
+          <ProtectedRoute>
+            <Orders />
+          </ProtectedRoute>
+        } />
         <Route path="/contact" element={<Contact />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/costume" element={<CostumePage />} />
-        <Route path="/costumes/:id" element={<CostumeDetailsPage />} /> {/* Fixed the route */}
-        <Route path="/photographer" element={<PhotographerPage />} /> {/* Update the route path */}
-        <Route path="/photographers/:id" element={<PhotoDetailsPage />} /> {/* New route for PhotoDetailsPage */}
+        <Route path="/costumes/:id" element={<CostumeDetailsPage />} />
+        <Route path="/photographer" element={<PhotographerPage />} />
+        <Route path="/photographers/:id" element={<PhotoDetailsPage />} />
         <Route path="/makeup" element={<MakeupPage />} />
         <Route path="/makeups/:id" element={<MakeupDetailsPage />} />
         <Route path="/venue" element={<VenuePage />} />

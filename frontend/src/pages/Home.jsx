@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Footer from '../components/Footer';
 import Faq from '../components/Faq';
 import Service from './Services';
 
@@ -46,25 +46,26 @@ const Home = () => {
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
           {/* Left Side */}
           <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
-            <h1 className=" text-4xl md:text-8xl font-normal">
-              <span className="text-blue-500">Your </span>
-              <span className="text-yellow-500">One-Stop-Shop </span>
-              <span className="text-purple-700">for Memorable Events</span>
+            <h1 className="text-4xl md:text-8xl font-normal">
+              <span className="font-bold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'black' }}>Your </span>
+              <span className="font-bold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'black' }}>One-Stop-Shop </span>
+              <span className="font-bold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'black' }}>for Memorable Events</span>
             </h1>
           </div>
+
           {/* Right Side */}
           <div className="md:w-1/2 text-center md:text-left">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Find Everything You Need Here
             </h2>
-            <p className="text-gray-700 mb-6">
+            <p className="text-gray-700 mb-6 font-bold">
               We aim to simplify the entire event planning process for customers and event planners
               by providing a platform that helps them with everything they need for an event,
               including event space or venue, catering, event dress decoration, and budget planning.
             </p>
-            <a href="#services" className="px-6 py-3 rounded hover:bg-blue-500 bg-blue-500 text-white">
+            <Link to="/services" className=" font-semibold px-6 py-3 rounded hover:bg-blue-600 bg-blue-500 text-white">
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
         {/* Live Video */}

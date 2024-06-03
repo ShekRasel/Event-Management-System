@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.jpg';
 import { AuthContext } from '../context/AuthContext';
 
@@ -8,9 +8,9 @@ const Navbar = () => {
   const [color, setColor] = useState('red');
   const { isLoggedIn, profilePhoto, logout } = useContext(AuthContext);
   const location = useLocation();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-  }, [isLoggedIn]);
+  useEffect(() => {}, [isLoggedIn]);
 
   useEffect(() => {
     const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
@@ -32,18 +32,17 @@ const Navbar = () => {
 
   const handleOrdersClick = () => {
     if (!isLoggedIn) {
-      // Redirect to sign-in page if not logged in
-      window.location.href = '/signin'; // Update the path as per your routes
+      navigate('/signin'); // Use navigate instead of window.location.href
     }
   };
 
   const getLinkClasses = (path) => {
     return location.pathname === path
-      ? "text-red-500 font-bold"
-      : "text-gray-700 hover:text-gray-900 font-semibold hover:underline";
+      ? 'text-red-500 font-bold'
+      : 'text-gray-700 hover:text-gray-900 font-semibold hover:underline';
   };
 
-  const profilePhotoClass = "w-10 h-10 rounded-full border-4 border-green-500";
+  const profilePhotoClass = 'w-10 h-10 rounded-full border-4 border-green-500';
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-10">
@@ -75,7 +74,7 @@ const Navbar = () => {
         <div className="md:hidden flex items-center">
           <button onClick={toggleMenu} className="text-gray-700 focus:outline-none">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}></path>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16m-7 6h7'}></path>
             </svg>
           </button>
         </div>
@@ -84,7 +83,7 @@ const Navbar = () => {
         <div className="md:hidden bg-white shadow-md">
           <Link to="/" className={`block px-4 py-2 ${getLinkClasses("/")}`} onClick={toggleMenu}>Home</Link>
           <Link to="/services" className={`block px-4 py-2 ${getLinkClasses("/services")}`} onClick={toggleMenu}>Services</Link>
-          <Link to="/orders" className={`block px-4 py-2 ${getLinkClasses("/orders")}`} onClick={handleOrdersClick}>Orders</Link>
+          <Link to="/orders" className={`block px-4 py-2 ${getLinkClasses("/orders")}`} onClick={() => { handleOrdersClick(); toggleMenu(); }}>Orders</Link>
           <Link to="/contact" className={`block px-4 py-2 ${getLinkClasses("/contact")}`} onClick={toggleMenu}>Contact</Link>
           <Link to="/add-product" className={`block px-4 py-2 ${getLinkClasses("/add-product")}`} onClick={toggleMenu}>Add Product</Link>
           {!isLoggedIn && <Link to="/signup" className="block bg-blue-500 text-white text-center px-4 py-2 rounded hover:bg-blue-600 m-2" onClick={toggleMenu}>Sign Up</Link>}

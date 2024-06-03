@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const makeups = [
   {
     id: 1,
@@ -70,7 +70,9 @@ const makeups = [
 
 const MakeupDetailsPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [makeup, setMakeup] = useState(null);
+  const [userLoggedIn, setUserLoggedIn] = useState(true); // Assuming you have a state to track user authentication
 
   useEffect(() => {
     // Simulating asynchronous loading
@@ -79,6 +81,41 @@ const MakeupDetailsPage = () => {
       setMakeup(selectedMakeup);
     }, 1000);
   }, [id]);
+
+  const handleBookNow = async () => {
+    if (!userLoggedIn) {
+      // Redirect to SignIn page
+      navigate('/signin');
+      return;
+    }
+  
+    try {
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+      console.log("Booking token:", token);
+  
+      if (!token) {
+        console.error('Token is undefined');
+        return; // Handle missing token scenario
+      }
+  
+      await axios.post('http://localhost:3000/api/services', {
+        name: makeup.name,
+        price: makeup.price,
+        bookedBy: userId
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      // Redirect to Orders page
+      navigate('/orders');
+    } catch (error) {
+      console.error('Error booking service:', error);
+      // Display an error message to the user (e.g., using Toast notifications)
+    }
+  };
 
   if (!makeup) {
     return <div>Loading...</div>;
@@ -104,7 +141,7 @@ const MakeupDetailsPage = () => {
             <h1 className="text-4xl font-semibold italic text-stone-400 mb-4">{makeup.name} {makeup.emoji}</h1>
             <p className="text-xl text-gray-700 mb-4">{makeup.description}</p>
             <p className="text-2xl font-bold text-gray-800 mb-4">{makeup.price}</p>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Book Now</button>
+            <button onClick={handleBookNow} className="bg-blue-500 text-white px-4 py-2 rounded-lg">Book Now</button>
           </div>
         </div>
       </div>

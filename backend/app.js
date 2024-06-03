@@ -1,9 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const authRoutes = require('./routes/authRoutes');
+const serviceRoutes = require('./routes/serviceRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,7 +30,7 @@ const upload = multer({ storage: storage });
 
 // Routes
 app.use('/api', authRoutes);
-
+app.use('/api', serviceRoutes)
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/EventManagement')
   .then(() => {

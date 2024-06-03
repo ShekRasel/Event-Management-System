@@ -2,6 +2,9 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -10,6 +13,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -24,6 +28,7 @@ const SignUp = () => {
     event.preventDefault();
     if (!validateEmail(email)) {
       setError('Email or Phone Number wrong');
+      toast.error('Invalid email domain. Please use gmail.com, yahoo.com, or outlook.com.');
       return;
     }
 
@@ -43,13 +48,14 @@ const SignUp = () => {
         }
       });
 
-      console.log(response.data);
       localStorage.setItem('isLoggedIn', true);
       localStorage.setItem('profilePhoto', response.data.profilePhoto);
       login(response.data.profilePhoto);
       navigate('/');
     } catch (error) {
-      console.error('Error signing up:', error.response ? error.response.data : error.message);
+      const errorMessage = error.response ? error.response.data : error.message;
+      console.error('Error signing up:', errorMessage);
+      toast.error(`Error signing up: ${errorMessage}`);
     }
   };
 
@@ -76,7 +82,7 @@ const SignUp = () => {
         <div className="sm:w-1/2 flex items-center justify-center p-4 sm:p-8">
           <div className="max-w-lg w-full">
             <h2 className="text-3xl font-bold text-center mb-6">Sign up to Eventhive</h2>
-            <p className="text-center font-bold text-gray-600 mb-4">Already have an account? <a href="/signin" className="text-blue-500 font-bold">Login</a></p>
+            <p className="text-center font-bold text-gray-600 mb-4">Already have an account? <a href="/signin" className="text-blue-500 font-bold">SignIn</a></p>
             {error && <p className="text-red-500 text-center mb-4">{error}</p>}
             <form onSubmit={handleSignUp}>
               <div className="mb-4">
@@ -88,8 +94,21 @@ const SignUp = () => {
               <div className="mb-4">
                 <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" required />
               </div>
-              <div className="mb-4">
-                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" required />
+              <div className="mb-4 relative">
+                <input 
+                  type={showPassword ? 'text' : 'password'} 
+                  placeholder="Password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" 
+                  required 
+                />
+                <div 
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-700 cursor-pointer" 
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">Choose a photo from PC</label>
@@ -101,6 +120,7 @@ const SignUp = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

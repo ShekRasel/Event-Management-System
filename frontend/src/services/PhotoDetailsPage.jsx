@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const photographers = [
   {
@@ -136,14 +138,27 @@ const photographers = [
 const PhotoDetailsPage = () => {
   const { id } = useParams();
   const [photographer, setPhotographer] = useState(null);
+  const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    // Simulating asynchronous loading
     setTimeout(() => {
       const selectedPhotographer = photographers.find((p) => p.id === parseInt(id));
       setPhotographer(selectedPhotographer);
     }, 1000);
   }, [id]);
+
+  const handleBookNow = () => {
+    if (!isLoggedIn) {
+      // Redirect to sign-in page if not logged in
+      window.location.href = '/signin'; // Update the path as per your routes
+      return;
+    }
+    
+    const existingServices = JSON.parse(localStorage.getItem('services')) || [];
+    const newServices = [...existingServices, { eventName: photographer.name, price: photographer.price }];
+    localStorage.setItem('services', JSON.stringify(newServices));
+    window.location.href = "/Orders";
+  };
 
   if (!photographer) {
     return <div>Loading...</div>;
@@ -169,7 +184,9 @@ const PhotoDetailsPage = () => {
             <h1 className="text-4xl font-semibold italic text-stone-400 mb-4">{photographer.name} {photographer.emoji}</h1>
             <p className="text-xl text-gray-700 mb-4">{photographer.description}</p>
             <p className="text-2xl font-bold text-gray-800 mb-4">{photographer.price}</p>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Hire Now</button>
+            <button 
+              onClick={handleBookNow}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Hire Now</button>
           </div>
         </div>
       </div>

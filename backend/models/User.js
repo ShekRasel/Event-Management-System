@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  profilePhoto: { type: String } // Add this field
+  profilePhoto: { type: String },
+  services: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Service' }] // Add services field
 });
 
 const User = mongoose.model('User', userSchema);
