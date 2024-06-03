@@ -9,4 +9,6 @@ router.post('/services', requireAuth, serviceController.createService);
 // Get services for user route
 router.get('/services', requireAuth, serviceController.getUserServices);
 
+router.delete('/services/:serviceId', serviceController.deleteService);
+
 module.exports = router;
