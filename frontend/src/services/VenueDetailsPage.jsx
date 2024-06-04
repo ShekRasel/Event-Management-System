@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext} from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-
+import axios from 'axios';
 const venues = [
   {
     id: 1,
@@ -135,6 +135,7 @@ const venues = [
 
 const VenueDetailsPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [venue, setVenue] = useState(null);
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -146,17 +147,37 @@ const VenueDetailsPage = () => {
     }, 1000);
   }, [id]);
 
-  const handleBookNow = () => {
+  const handleBookNow = async () => {
     if (!isLoggedIn) {
-      // Redirect to sign-in page if not logged in
-      window.location.href = '/signin'; // Update the path as per your routes
+      navigate('/signin');
       return;
     }
-    
-    const existingServices = JSON.parse(localStorage.getItem('services')) || [];
-    const newServices = [...existingServices, { eventName: venue.name, price: venue.price }];
-    localStorage.setItem('services', JSON.stringify(newServices));
-    window.location.href = "/Orders";
+  
+    try {
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        console.error('Token is undefined');
+        return; // Handle missing token scenario
+      }
+  
+      await axios.post('http://localhost:3000/api/services', {
+        name: venue.name,
+        price: venue.price,
+        bookedBy: userId
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      // Redirect to Orders page
+      navigate('/orders');
+    } catch (error) {
+      console.error('Error booking service:', error);
+      // Display an error message to the user (e.g., using Toast notifications)
+    }
   };
 
   if (!venue) {

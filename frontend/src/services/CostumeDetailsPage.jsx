@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { useParams,useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 
 const costumes = [
@@ -137,18 +138,18 @@ const CostumeDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [costume, setCostume] = useState(null);
-  const { userLoggedIn , setUserLoggedIn} = useState(true);
+  const { isLoggedIn} = useContext(AuthContext);
 
   useEffect(() => {
     setTimeout(() => {
-      const selectedCostume = costumes.find((m) => m.id === parseInt(id));
+      const selectedCostume = costumes.find((c) => c.id === parseInt(id));
       setCostume(selectedCostume);
     }, 1000);
   }, [id]);
 
   const handleBookNow = async () => {
-    if (!userLoggedIn) {
-       navigate('/signin');
+    if (!isLoggedIn) {
+      navigate('/signin');
       return;
     }
   

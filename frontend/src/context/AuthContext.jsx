@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (photo, userId, token) => { // Include userId as a parameter
-    console.log(`Received userId: ${userId}`);
+   
     localStorage.setItem('isLoggedIn', true);
     if (photo) {
       const formattedPhoto = photo.replace(/\\/g, '/');
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem('userId', userId); // Store user ID in local storage
     setUserId(userId);
     setIsLoggedIn(true);
-    console.log(`user id is :${userId}`);
+  
   };
 
   const logout = () => {

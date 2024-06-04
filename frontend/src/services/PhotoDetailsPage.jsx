@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useParams , useNavigate} from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
 
 const photographers = [
   {
@@ -137,6 +137,7 @@ const photographers = [
 
 const PhotoDetailsPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [photographer, setPhotographer] = useState(null);
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -147,17 +148,37 @@ const PhotoDetailsPage = () => {
     }, 1000);
   }, [id]);
 
-  const handleBookNow = () => {
+  const handleBookNow = async () => {
     if (!isLoggedIn) {
-      // Redirect to sign-in page if not logged in
-      window.location.href = '/signin'; // Update the path as per your routes
+      navigate('/signin');
       return;
     }
-    
-    const existingServices = JSON.parse(localStorage.getItem('services')) || [];
-    const newServices = [...existingServices, { eventName: photographer.name, price: photographer.price }];
-    localStorage.setItem('services', JSON.stringify(newServices));
-    window.location.href = "/Orders";
+  
+    try {
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        console.error('Token is undefined');
+        return; // Handle missing token scenario
+      }
+  
+      await axios.post('http://localhost:3000/api/services', {
+        name: photographer.name,
+        price: photographer.price,
+        bookedBy: userId
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      // Redirect to Orders page
+      navigate('/orders');
+    } catch (error) {
+      console.error('Error booking service:', error);
+      // Display an error message to the user (e.g., using Toast notifications)
+    }
   };
 
   if (!photographer) {
