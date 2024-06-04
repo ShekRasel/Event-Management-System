@@ -42,14 +42,14 @@ const Navbar = () => {
       : 'text-gray-700 hover:text-gray-900 font-semibold hover:underline';
   };
 
-  const profilePhotoClass = 'w-10 h-10 rounded-full border-4 border-green-500';
+  const profilePhotoClass = 'w-12 h-12 rounded-full border-4 border-green-600';
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-10">
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="flex items-center">
-          <img src={logo} alt="Logo" className="h-10 mr-4" />
-          <div className="text-2xl font-semibold" style={{ color }}>EventExpert</div>
+          <img src={logo} alt="Logo" className="h-10 rounded-full mr-4" />
+          <div className="text-3xl font-semibold italic" style={{ color }}>EventExpert</div>
         </div>
         <div className="flex items-center space-x-4">
           <div className="hidden md:flex space-x-6">

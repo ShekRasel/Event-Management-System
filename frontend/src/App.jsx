@@ -13,11 +13,15 @@ import CostumePage from './services/CostumePage';
 import PhotographerPage from './services/PhotographerPage';
 import MakeupPage from './services/MakeupPage';
 import VenuePage from './services/VenuePage';
+import BirthdayPage from './services/BithdayPage';
+import OfficePage from './services/OfficePage';
 import PhotoDetailsPage from './services/PhotoDetailsPage';
 import CostumeDetailsPage from './services/CostumeDetailsPage';
 import MakeupDetailsPage from './services/MakeupDetailsPage';
 import VenueDetailsPage from './services/VenueDetailsPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import BirthdayDetailsPage from './services/BithdayDetailsPage';
+import OfficeDetailsPage from './services/OfficeDetailsPage';
 
 const App = () => {
   return (
@@ -43,6 +47,10 @@ const App = () => {
         <Route path="/makeups/:id" element={<MakeupDetailsPage />} />
         <Route path="/venue" element={<VenuePage />} />
         <Route path="/venues/:id" element={<VenueDetailsPage />} />
+        <Route path="/birthday" element={<BirthdayPage/>} />
+        <Route path="/birthdays/:id" element={<BirthdayDetailsPage />} />
+        <Route path="/office" element={<OfficePage/>} />
+        <Route path="/offices/:id" element={<OfficeDetailsPage />} />
       </Routes>
       <Footer/>
     </Router>

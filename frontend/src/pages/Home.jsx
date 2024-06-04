@@ -10,11 +10,11 @@ const Home = () => {
   const carouselSettings = {
     dots: false,
     infinite: true,
-    speed: 500,
+    speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 1000,
     responsive: [
       {
         breakpoint: 1024,
@@ -86,7 +86,7 @@ const Home = () => {
         </div>
         {/* Carousel Section */}
         <div className="container mx-auto mt-14">
-          <h2 className="text-2xl font-semibold text-center mb-4">Featured Brands</h2>
+          <h2 className="text-4xl font-semibold text-center mb-8 text-green-600 italic">Featured Brands</h2>
           <Slider {...carouselSettings}>
             <div className="brand-item">
               <img src="/images/bata_logo.png" alt="Bata" className="mx-auto mb-2 w-24 h-24 object-contain  hover:scale-150 transition-transform duration-300 ease-in-out" />
@@ -129,7 +129,7 @@ const Home = () => {
           <img src="https://plus.unsplash.com/premium_photo-1661277666101-01fb123f2a4c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Overlay Image" className="absolute origin-bottom-right scale-50 md:scale-55 rounded-md -bottom-12 -right-7 object-cover transition-transform duration-300 hover:scale-60" />
       </div>
       <div className="md:w-1/2 px-16 mt-12 md:mt-0">
-          <div className="text-3xl font-bold text-center md:text-left mb-4 text-blue-700">
+          <div className="text-4xl font-bold text-center md:text-left mb-4 text-blue-700">
               Grow Your Business With Us
           </div>
           <p className="text-gray-700 mb-6 text-center md:text-left">
