@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
@@ -82,7 +82,7 @@ const SignUp = () => {
         <div className="sm:w-1/2 flex items-center justify-center p-4 sm:p-8">
           <div className="max-w-lg w-full">
             <h2 className="text-3xl font-bold text-center mb-6">Sign up to Eventhive</h2>
-            <p className="text-center font-bold text-gray-600 mb-4">Already have an account? <a href="/signin" className="text-blue-500 font-bold">SignIn</a></p>
+            <p className="text-center font-bold text-gray-600 mb-4">Already have an account? <Link to="/signin" className="text-blue-500 font-bold">SignIn</Link></p>
             {error && <p className="text-red-500 text-center mb-4">{error}</p>}
             <form onSubmit={handleSignUp}>
               <div className="mb-4">

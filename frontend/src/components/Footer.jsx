@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../assets/logo.jpg';
 
 const Footer = () => {        
     return (
@@ -6,8 +7,9 @@ const Footer = () => {
     <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div className="grid grid-cols-2 md:col-span-3 lg:grid-cols-6 gap-y-16 gap-x-12">
             <div className="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
-                <img className="w-auto h-9" src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg" alt="" />
-
+            <div className=' flex'>
+            <img src={logo} alt="Logo" className="h-10 rounded-md mr-4" /> <span className='font-bold text-2xl text-cyan-400'>Curate & Co</span>
+            </div>
                 <p className=" font-bold text-base leading-relaxed text-gray-600 mt-7">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
 
                 <ul className="flex items-center space-x-3 mt-9">
