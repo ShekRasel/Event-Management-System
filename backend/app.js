@@ -7,6 +7,7 @@ const path = require('path');
 const authRoutes = require('./routes/authRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,6 +34,7 @@ const upload = multer({ storage: storage });
 app.use('/api', authRoutes);
 app.use('/api', serviceRoutes)
 app.use('/api', paymentRoutes);
+app.use('/api/admin', adminRoutes);
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/EventManagement')
   .then(() => {

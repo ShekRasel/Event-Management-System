@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const path = require('path');
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 // Signup function
 exports.signup = async (req, res) => {
@@ -18,14 +18,22 @@ exports.signup = async (req, res) => {
       lastName,
       email,
       password: hashedPassword,
-      profilePhoto: profilePhoto ? profilePhoto.path : null // Save the profile photo path
+      profilePhoto: profilePhoto ? profilePhoto.path : null, // Save the profile photo path
+      role:'user'
     });
 
     await user.save();
 
+    // Generate token
+    const token = jwt.sign({
+      email: user.email,
+      id: user._id
+    }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
     // Respond with user creation success and profile photo URL
     res.status(201).json({
       message: 'User created successfully',
+      token,
       profilePhoto: user.profilePhoto
     });
   } catch (error) {
@@ -42,15 +50,15 @@ exports.signin = async (req, res) => {
     // Find the user by email
     const user = await User.findOne({ email });
 
-
     // If user not found or password does not match, respond with error
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
+    // Generate token
     const token = jwt.sign({
-      email: email,
-      id: user?._id
+      email: user.email,
+      id: user._id
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     // If authentication successful, respond with success message

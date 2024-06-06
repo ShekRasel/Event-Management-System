@@ -48,7 +48,9 @@ const SignUp = () => {
         }
       });
 
+      const { token, profilePhoto: responseProfilePhoto } = response.data;
       localStorage.setItem('isLoggedIn', true);
+      localStorage.setItem("token", token)
       localStorage.setItem('profilePhoto', response.data.profilePhoto);
       login(response.data.profilePhoto);
       navigate('/');

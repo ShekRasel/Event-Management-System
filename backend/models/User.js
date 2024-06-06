@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   profilePhoto: { type: String },
+  role: { type: String, default: 'user' },
   services: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Service' }] // Add services field
 });
 
