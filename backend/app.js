@@ -35,14 +35,14 @@ app.get('/set-cookie', (req, res) => {
   res.send('Cookie has been set');
 });
 
-
 // Routes
 app.use('/api', authRoutes);
-app.use('/api', serviceRoutes)
+app.use('/api', serviceRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api/admin', adminRoutes);
+
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/EventManagement')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB');
     // Start the server
