@@ -49,7 +49,7 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="flex items-center">
           <img src={logo} alt="Logo" className="h-10 rounded-full mr-4" />
-          <div className="text-3xl font-semibold italic" style={{ color }}>Curate & Co</div>
+          <div className="text-3xl font-semibold italic" style={{ color }}>Event-Expert</div>
         </div>
         <div className="flex items-center space-x-4">
           <div className="hidden md:flex space-x-6">

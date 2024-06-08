@@ -30,6 +30,12 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+app.get('/set-cookie', (req, res) => {
+  res.cookie('m', 'value', { httpOnly: true, secure: true });
+  res.send('Cookie has been set');
+});
+
+
 // Routes
 app.use('/api', authRoutes);
 app.use('/api', serviceRoutes)

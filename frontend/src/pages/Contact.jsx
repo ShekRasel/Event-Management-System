@@ -9,14 +9,13 @@ const Contact = () => {
           <div>
             <h2 className="text-xl md:text-2xl font-bold mb-2">Office Address</h2>
             <p className="text-gray-700 mb-4">
-              123 Main Street<br />
-              City, State, ZIP Code<br />
-              Country
+              Ashuliya<br />
+              Dhaka, Bangladesh<br />
             </p>
             <h2 className="text-xl md:text-2xl font-bold mb-2">Phone</h2>
-            <p className="text-gray-700 mb-4">123-456-7890</p>
+            <p className="text-gray-700 mb-4">01648936921</p>
             <h2 className="text-xl md:text-2xl font-bold mb-2">Email</h2>
-            <p className="text-gray-700 mb-4">info@example.com</p>
+            <p className="text-gray-700 mb-4">mdr889299@gmail.com</p>
           </div>
           <div>
             <h2 className="text-xl md:text-2xl font-bold mb-2">Business Hours</h2>

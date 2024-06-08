@@ -73,6 +73,7 @@ const SignIn = () => {
                 </div>
               </div>
               <button type="submit" className="w-full font-bold bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Sign In</button>
+              <button className="w-full font-bold bg-red-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-red-600 focus:outline-none focus:bg-red-600">Sign Up with Google</button>
             </form>
           </div>
         </div>
