@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
     const token = jwt.sign({
       email: user.email,
       id: user._id
-    }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    }, process.env.JWT_SECRET, { expiresIn: '10h' });
 
     // Respond with user creation success and profile photo URL
     res.status(201).json({
@@ -59,7 +59,7 @@ exports.signin = async (req, res) => {
     const token = jwt.sign({
       email: user.email,
       id: user._id
-    }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    }, process.env.JWT_SECRET, { expiresIn: '10h' });
 
     // If authentication successful, respond with success message
     res.status(200).json({
