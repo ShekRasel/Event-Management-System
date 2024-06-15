@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { MdMessage, MdNotifications, MdAccountCircle } from 'react-icons/md';
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -16,7 +17,7 @@ const AdminDashboard = () => {
         });
         setUsers(usersResponse.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching users:', error);
       }
     };
 
@@ -34,7 +35,7 @@ const AdminDashboard = () => {
         });
         setServices(servicesResponse.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching services:', error);
       }
     };
 
@@ -44,13 +45,12 @@ const AdminDashboard = () => {
   const handleDeleteUser = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`http://localhost:3000/api/admin/users/${userId}`, {
+      await axios.delete(`http://localhost:3000/api/admin/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log(response.data); // Handle successful deletion
-      setUsers(users.filter(user => user._id !== userId)); // Update state to remove deleted user
+      setUsers(users.filter(user => user._id !== userId));
     } catch (error) {
       console.error('Error deleting user:', error);
     }
@@ -59,85 +59,145 @@ const AdminDashboard = () => {
   const handleDeleteService = async (serviceId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`http://localhost:3000/api/admin/services/${serviceId}`, {
+      await axios.delete(`http://localhost:3000/api/admin/services/${serviceId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log(response.data); // Handle successful deletion
-      setServices(services.filter(service => service._id !== serviceId)); // Update state to remove deleted service
+      setServices(services.filter(service => service._id !== serviceId));
     } catch (error) {
       console.error('Error deleting service:', error);
     }
   };
 
   return (
-    <div className="p-8 mt-10">
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
-      <div className="flex space-x-8">
-        <div className="w-1/2 p-4 bg-white shadow-lg rounded-lg">
-          <h2 className="text-2xl font-bold mb-4">Users</h2>
-          <table className="min-w-full bg-white">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b-2 border-gray-300">ID</th>
-                <th className="py-2 px-4 border-b-2 border-gray-300">Email</th>
-                <th className="py-2 px-4 border-b-2 border-gray-300">First Name</th>
-                <th className="py-2 px-4 border-b-2 border-gray-300">Last Name</th>
-                <th className="py-2 px-4 border-b-2 border-gray-300">Profile Photo</th>
-                <th className="py-2 px-4 border-b-2 border-gray-300">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(users) && users.map(user => (
-                <tr key={user._id} className="hover:bg-gray-100">
-                  <td className="py-2 px-4 border-b border-gray-300">{user._id}</td>
-                  <td className="py-2 px-4 border-b border-gray-300">{user.email}</td>
-                  <td className="py-2 px-4 border-b border-gray-300">{user.firstName}</td>
-                  <td className="py-2 px-4 border-b border-gray-300">{user.lastName}</td>
-                  <td className="py-2 px-4 border-b border-gray-300">
-                    {user.profilePhoto ? (
-                      <img src={`http://localhost:3000/${user.profilePhoto}`} alt="Profile" className="w-16 h-16 rounded-full object-cover" onError={(e) => e.target.style.display = 'none'} />
-                    ) : (
-                      <span>No Photo</span>
-                    )}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-300">
-                    <button onClick={() => handleDeleteUser(user._id)} className="bg-red-500 text-white px-4 py-2 rounded">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="flex flex-col min-h-screen">
+      {/* Navbar */}
+      <div className="flex justify-between items-center bg-gray-800 text-white px-4 py-2 fixed top-0 w-full z-10">
+        <div className="flex items-center">
+          <img src="/src/assets/logo.jpg" alt="Logo" className="w-10 h-10 mr-2 rounded-full" />
+          <span className="text-lg font-bold">Event Expert</span>
         </div>
-        <div className="w-1/2 p-4 bg-white shadow-lg rounded-lg">
-          <h2 className="text-2xl font-bold mb-4">Booked Services</h2>
-          <table className="min-w-full bg-white">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b-2 border-gray-300">Service ID</th>
-                <th className="py-2 px-4 border-b-2 border-gray-300">Booked Service</th>
-                <th className="py-2 px-4 border-b-2 border-gray-300">Price</th>
-                <th className="py-2 px-4 border-b-2 border-gray-300">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(services) && services.map(service => (
-                <tr key={service._id} className="hover:bg-gray-100">
-                  <td className="py-2 px-4 border-b border-gray-300">{service._id}</td>
-                  <td className="py-2 px-4 border-b border-gray-300">{service.name}</td>
-                  <td className="py-2 px-4 border-b border-gray-300">{service.price}</td>
-                  <td className="py-2 px-4 border-b border-gray-300">
-                    <button onClick={() => handleDeleteService(service._id)} className="bg-red-500 text-white px-4 py-2 rounded">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="flex-grow flex justify-center mx-4">
+          <input type="text" placeholder="Search..." className="w-4/12 px-3 py-1.5 rounded-md bg-gray-700 text-white outline-none" />
+        </div>
+        <div className="flex items-center gap-3">
+          <MdMessage className="w-6 h-6 mr-2 cursor-pointer" />
+          <MdNotifications className="w-6 h-6 mr-2 cursor-pointer" />
+          <MdAccountCircle className="w-10 h-10 rounded-full cursor-pointer" />
+        </div>
+      </div>
+
+      <div className="flex mt-12">
+        {/* Sidebar */}
+        <div className="bg-gray-800 text-white w-60 p-4 fixed left-0 h-screen overflow-y-auto z-10">
+          <h2 className="text-xl font-bold mb-4">Admin Dashboard</h2>
+          <ul>
+            <li className="mb-2">Users</li>
+            <li className="mb-2">Services</li>
+            <li className="mb-2">Sing In </li>
+            <li className="mb-2">Sign Up</li>
+            <li className="mb-2">Sign Out</li>
+          </ul>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-grow p-8 ml-60 transition-all duration-300">
+          <div className="grid grid-cols-1 gap-8">
+            <div className="bg-white shadow-md rounded-lg p-4 overflow-x-auto mb-8">
+              <h2 className="text-xl font-bold mb-4 text-center">Users</h2>
+              <div className="max-h-96 overflow-y-auto">
+                <table className="w-full border-collapse">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="p-2 border-b border-gray-300">Email</th>
+                      <th className="p-2 border-b border-gray-300">First Name</th>
+                      <th className="p-2 border-b border-gray-300">Last Name</th>
+                      <th className="p-2 border-b border-gray-300">Profile Photo</th>
+                      <th className="p-2 border-b border-gray-300">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map(user => (
+                      <tr key={user._id} className="hover:bg-gray-100">
+                        <td className="p-2 border-b border-gray-300">{user.email}</td>
+                        <td className="p-2 border-b border-gray-300">{user.firstName}</td>
+                        <td className="p-2 border-b border-gray-300">{user.lastName}</td>
+                        <td className="p-2 border-b border-gray-300">
+                          {user.profilePhoto ? (
+                            <img
+                              src={`http://localhost:3000/${user.profilePhoto}`}
+                              alt="Profile"
+                              className="w-12 h-12 rounded-full object-cover"
+                              onError={(e) => { e.target.style.display = 'none'; }}
+                            />
+                          ) : (
+                            <span>No Photo</span>
+                          )}
+                        </td>
+                        <td className="p-2 border-b border-gray-300">
+                          <button
+                            onClick={() => handleDeleteUser(user._id)}
+                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="bg-white shadow-md rounded-lg p-4 overflow-x-auto">
+              <h2 className="text-xl font-bold mb-4 text-center">Booked Services</h2>
+              <div className="max-h-96 overflow-y-auto">
+                <table className="w-full border-collapse">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="p-2 border-b border-gray-300">Service ID</th>
+                      <th className="p-2 border-b border-gray-300">Booked Service</th>
+                      <th className="p-2 border-b border-gray-300">Price</th>
+                      <th className="p-2 border-b border-gray-300">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {services.map(service => (
+                      <tr key={service._id} className="hover:bg-gray-100">
+                        <td className="p-2 border-b border-gray-300">{service._id}</td>
+                        <td className="p-2 border-b border-gray-300">{service.name}</td>
+                        <td className="p-2 border-b border-gray-300">{service.price}</td>
+                        <td className="p-2 border-b border-gray-300">
+                          <button
+                            onClick={() => handleDeleteService(service._id)}
+                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Sections */}
+        <div className="flex flex-col w-96 ml-8">
+          <div className="bg-white shadow-md rounded-lg p-4 mb-8">
+            <h2 className="text-xl font-bold mb-4 text-center">Section 1</h2>
+            {/* Content for Section 1 */}
+          </div>
+          <div className="bg-white shadow-md rounded-lg p-4 mb-8">
+            <h2 className="text-xl font-bold mb-4 text-center">Section 2</h2>
+            {/* Content for Section 2 */}
+          </div>
+          <div className="bg-white shadow-md rounded-lg p-4">
+            <h2 className="text-xl font-bold mb-4 text-center">Section 3</h2>
+            {/* Content for Section 3 */}
+          </div>
         </div>
       </div>
     </div>
