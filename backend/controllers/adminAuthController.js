@@ -16,6 +16,7 @@ exports.adminSignup = async (req, res) => {
       lastName,
       email,
       password,
+      profilePhoto: req.file ? req.file.path : null,
     });
 
     // Hash the password before saving

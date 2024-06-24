@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Service = require('../models/Service');
+const Admin = require('../models/Admin');
 
 exports.getUsers = async (req, res) => {
   try {
@@ -48,5 +49,19 @@ exports.deleteService = async (req, res) => {
   } catch (error) {
     console.error('Error deleting service:', error);
     res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};
+
+exports.getAdminProfile = async (req, res) => {
+  try {
+    // Assuming req.admin contains the authenticated admin object
+    const admin = await Admin.findById(req.admin.id).select('-password');
+    if (!admin) {
+      return res.status(404).json({ msg: 'Admin profile not found' });
+    }
+    res.json(admin);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 };

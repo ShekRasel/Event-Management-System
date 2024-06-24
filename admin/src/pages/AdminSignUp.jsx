@@ -8,20 +8,41 @@ const AdminSignUp = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [profilePhoto, setProfilePhoto] = useState(null); // State to hold the selected file
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  // Function to handle file input change
+  const handleFileChange = (e) => {
+    setProfilePhoto(e.target.files[0]); // Get the selected file
+  };
+
+  // Function to handle form submission
   const handleSignUp = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-    
+
+    // Create FormData object to append data
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('email', email);
+    formData.append('password', password);
+    if (profilePhoto) {
+      formData.append('profilePhoto', profilePhoto); // Append profilePhoto if selected
+    }
+
     try {
-      const response = await axios.post('http://localhost:3000/api/admin/signup', { firstName, lastName, email, password });
-      console.log(response.data); // Handle successful sign up
+      // Send POST request with formData
+      const response = await axios.post('http://localhost:3000/api/admin/signup', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data' // Set content type to multipart/form-data
+        }
+      });
       // Redirect to the dashboard page after successful signup
       navigate('/admin/dashboard');
     } catch (error) {
-      // Check if error has a response property before accessing it
+      // Handle error
       const errorMessage = error.response ? error.response.data.message : error.message;
       setError(errorMessage);
     }
@@ -47,7 +68,7 @@ const AdminSignUp = () => {
           <div className="max-w-lg w-full">
             <h2 className="text-3xl font-bold text-center mb-6">Admin Sign up</h2>
             {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-            <form onSubmit={handleSignUp}>
+            <form onSubmit={handleSignUp} encType="multipart/form-data">
               <div className="mb-4">
                 <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" required />
               </div>
@@ -72,6 +93,14 @@ const AdminSignUp = () => {
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </div>
+              </div>
+              <div className="mb-4">
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleFileChange} 
+                  className="w-full py-2 px-4 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500 font-bold" 
+                />
               </div>
               <button type="submit" className="w-full font-bold bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Sign Up</button>
             </form>
