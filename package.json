@@ -1,0 +1,18 @@
+{
+    "name": "event-management-system",
+    "private": true,
+    "version": "0.1.0",
+    "workspaces": [
+      "frontend",
+      "backend",
+      "admin"
+    ],
+    "scripts": {
+      "start": "concurrently \"npm start --prefix frontend\" \"npm start --prefix backend\" \"npm start --prefix admin\"",
+      "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\" \"npm run dev --prefix admin\""
+    },
+    "devDependencies": {
+      "concurrently": "^7.0.0"
+    }
+  }
+  
