@@ -65,7 +65,8 @@ exports.signin = async (req, res) => {
     res.status(200).json({
       message: 'Signin successful',
       token,
-      profilePhoto: user.profilePhoto // Include the profile photo URL in the response
+      profilePhoto: user.profilePhoto, // Include the profile photo URL in the response
+      email: user.email
     });
   } catch (error) {
     console.error(error);

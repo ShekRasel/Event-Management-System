@@ -46,16 +46,16 @@ const Home = () => {
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
           {/* Left Side */}
           <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
-            <h1 className="text-4xl md:text-8xl font-normal">
-              <span className="font-bold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'black' }}>Your </span>
-              <span className="font-bold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'black' }}>One-Stop-Shop </span>
-              <span className="font-bold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'black' }}>for Memorable Events</span>
+            <h1 className="text-3xl md:text-7xl font-normal">
+              <span className="font-semibold md: ml-32" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'Red' }}>Your </span> <br />
+              <span className="font-semibold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'blue' }}>One-Stop-Shop </span> <br />
+              <span className="font-semibold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'green' }}>For Memorable Events</span>
             </h1>
           </div>
 
           {/* Right Side */}
-          <div className="md:w-1/2 text-center md:text-left">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          <div className="md:w-1/2 text-center md:text-left px-2">
+            <h2 className="text-2xl md:text:-3xl font-bold text-gray-800 mb-4">
               Find Everything You Need Here
             </h2>
             <p className="text-gray-700 mb-6 font-bold">
@@ -63,7 +63,7 @@ const Home = () => {
               by providing a platform that helps them with everything they need for an event,
               including event space or venue, catering, event dress decoration, and budget planning.
             </p>
-            <Link to="/services" className=" font-semibold px-6 py-3 rounded hover:bg-blue-600 bg-blue-500 text-white">
+            <Link to="/services" className=" font-semibold px-6 py-3 rounded hover:bg-cyan-400 bg-cyan-300 text-black">
               Get Started
             </Link>
           </div>
@@ -97,7 +97,7 @@ const Home = () => {
               <p className="text-center font-semibold">Zara</p>
             </div>
             <div className="brand-item">
-              <img src="/images/dior_logo.png" alt="Dior" className="mx-auto mb-2 w-24 h-24 object-contain hover:scale-150 transition-transform duration-300 ease-in-out" />
+              <img src="/images/images.png" alt="Dior" className="mx-auto mb-2 w-24 h-24 object-contain hover:scale-150 transition-transform duration-300 ease-in-out" />
               <p className="text-center font-semibold">Dior</p>
             </div>
             <div className="brand-item">

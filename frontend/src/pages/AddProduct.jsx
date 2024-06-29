@@ -36,7 +36,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="container mx-auto py-12 flex justify-center">
+    <div className="container mx-auto py-12 flex justify-center bg-slate-400">
       <div className="max-w-2xl w-full px-6 py-8 bg-white rounded-lg shadow-md">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Add Product</h1>
         <form onSubmit={handleSubmit}>

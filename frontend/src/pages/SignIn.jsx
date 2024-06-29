@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext'; // Import the AuthContext
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import the eye icons
+import { FcGoogle } from "react-icons/fc";
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -73,7 +74,7 @@ const SignIn = () => {
                 </div>
               </div>
               <button type="submit" className="w-full font-bold bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Sign In</button>
-              <button className="w-full font-bold bg-red-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-red-600 focus:outline-none focus:bg-red-600">Sign Up with Google</button>
+              <button className="w-full font-bold bg-red-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-red-500 focus:outline-none focus:bg-red-600 flex items-center justify-center gap-2">Sign In with Google <FcGoogle className='w-7 h-7'/></button>
             </form>
           </div>
         </div>

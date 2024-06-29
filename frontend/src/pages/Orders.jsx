@@ -2,11 +2,11 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { FaTimes } from 'react-icons/fa';
 import { AuthContext } from '../context/AuthContext';
-import {loadStripe} from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 const Orders = () => {
   const [services, setServices] = useState([]);
-  const { profilePhoto, logout } = useContext(AuthContext);
+  const { profilePhoto, email, logout } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -65,7 +65,7 @@ const Orders = () => {
       const result = await stripe.redirectToCheckout({
         sessionId: session.id,
       });
-  
+
       if (result.error) {
         console.error('Error redirecting to Stripe checkout:', result.error.message);
       }
@@ -73,12 +73,13 @@ const Orders = () => {
       console.error('Error during payment:', error);
     }
   };
-  
 
   const handleSignOut = () => {
     logout();
     window.location.reload();
   };
+
+  console.log(email);
 
   return (
     <div className="flex min-h-screen bg-gray-100 p-6 justify-center">
@@ -87,6 +88,9 @@ const Orders = () => {
           <div>
             {profilePhoto && (
               <img src={`http://localhost:3000/${profilePhoto}`} alt="Profile" className="w-16 h-16 rounded-full mb-2" />
+            )}
+            {email && (
+              <p className=" text-red-600 text-sm"> Email:{email}</p>
             )}
           </div>
           <div>

@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FcGoogle } from "react-icons/fc";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -67,7 +68,7 @@ const SignUp = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col sm:flex-row w-full max-w-7xl bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="flex flex-col sm:flex-row w-full max-w-7xl  bg-slate-100 rounded-lg shadow-lg overflow-hidden">
         <div className="sm:w-1/2 flex items-center justify-center p-4 sm:p-8">
           <div className="relative w-full h-full">
             <img src="public/images/signupPic.avif" alt="SignUp" className="h-64 sm:h-96 md:h-[750px] w-full object-cover rounded-lg" />
@@ -118,7 +119,7 @@ const SignUp = () => {
               </div>
               <button type="submit" className="w-full font-bold bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Sign Up</button>
             </form>
-            <button className="w-full font-bold bg-red-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-red-600 focus:outline-none focus:bg-red-600">Sign Up with Google</button>
+            <button className="w-full font-bold bg-red-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-red-500 focus:outline-none focus:bg-red-600 flex items-center justify-center gap-2">Sign Up with Google <FcGoogle className='w-7 h-7'/> </button>
           </div>
         </div>
       </div>

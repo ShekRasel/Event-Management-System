@@ -17,7 +17,7 @@ const services = [
   {
     image: 'src/assets/services images/makeup.avif',
     title: 'Makeup and Decoration planing',
-    description: 'We offer the services of experienced makeup artists and event decorators who will transform your event venue into a stunning setting. Our team will skillfully apply makeup to give your guests an attractive appearance. They are dedicated to creating a visually appealing atmosphere and ensuring a memorable experience for all attendees.',
+    description: 'We offer the services of experienced makeup artists and event decorators who will transform your event venue into a stunning setting. Our team will skillfully apply makeup to give your guests an attractive appearance.',
     link: '/makeup'
   },
   {
@@ -45,13 +45,13 @@ const Service = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-5xl font-bold mb-4 text-center text-blue-500 italic">
+      <h1 className="text-5xl font-bold mb-4 text-center text-blue-700 italic">
         Streamline Your Event Planning with <br /> Our Comprehensive Services
       </h1>
-      <p className="mb-8 font-semibold text-lg text-center text-blue-400">
+      <p className="mb-8 font-semibold text-lg text-center text-blue-500">
         From Venues to Vendors: Get Everything You Need for Your Next Event Here
       </p>
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {services.map((service, index) => (
           <div
             key={index}
@@ -62,15 +62,19 @@ const Service = () => {
               alt={service.title}
               className="w-full h-auto max-h-96 object-cover transition-transform duration-300 transform group-hover:scale-105"
             />
-            <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-65">
-              <h1 className="text-white text-xl mb-2 transition-all duration-300 transform translate-y-full group-hover:translate-y-0" style={{ color: 'rgb(36,145,184,255)' }}>{service.title}</h1>
-              <p className="text-white font-bold mb-4 text-center transition-all duration-300 transform translate-y-full group-hover:translate-y-0">{service.description}</p>
-              <button
-                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-8 font-semibold rounded-full transition-all duration-300 transform translate-y-full group-hover:translate-y-0"
-                onClick={() => navigate(service.link)}
-              >
-                More
-              </button>
+            <div className="absolute inset-0 flex flex-col justify-center items-center transition-opacity duration-300 bg-transparent group-hover:bg-black group-hover:bg-opacity-65">
+              <h1 className="text-white text-2xl sm:text-3xl  font-semibold mt-12 transition-all duration-300" style={{ color: 'white' }}>
+                {service.title}
+              </h1>
+              <div className="flex flex-col items-center transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-4">
+                <p className="text-white font-bold mb-4 px-8 text-center">{service.description}</p>
+                <button
+                  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-8 font-semibold rounded-md"
+                  onClick={() => navigate(service.link)}
+                >
+                  More
+                </button>
+              </div>
             </div>
           </div>
         ))}

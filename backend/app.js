@@ -44,7 +44,7 @@ app.use('/api/admin', adminRoutes);
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB atlas');
     // Start the server
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
   })
