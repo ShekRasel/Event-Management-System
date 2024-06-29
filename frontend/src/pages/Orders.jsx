@@ -12,7 +12,7 @@ const Orders = () => {
     const fetchServices = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/services', {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/services`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -29,7 +29,7 @@ const Orders = () => {
   const handleDelete = async (serviceId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3000/api/services/${serviceId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/services/${serviceId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -51,7 +51,7 @@ const Orders = () => {
       const headers = {
         "Content-Type": "application/json",
       };
-      const response = await fetch("http://localhost:3000/api/create-checkout-session", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/create-checkout-session`, {
         method: "POST",
         headers: headers,
         body: JSON.stringify(body),
@@ -87,7 +87,7 @@ const Orders = () => {
         <div className="flex justify-between items-center mb-4">
           <div>
             {profilePhoto && (
-              <img src={`http://localhost:3000/${profilePhoto}`} alt="Profile" className="w-16 h-16 rounded-full mb-2" />
+              <img src={`${import.meta.env.VITE_API_BASE_URL}/${profilePhoto}`} alt="Profile" className="w-16 h-16 rounded-full mb-2" />
             )}
             {email && (
               <p className=" text-red-600 text-sm"> Email:{email}</p>

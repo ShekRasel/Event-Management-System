@@ -163,7 +163,7 @@ const PhotoDetailsPage = () => {
         return; // Handle missing token scenario
       }
   
-      await axios.post('http://localhost:3000/api/services', {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/services`, {
         name: photographer.name,
         price: photographer.price,
         bookedBy: userId

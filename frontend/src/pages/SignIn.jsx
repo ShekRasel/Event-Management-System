@@ -18,7 +18,7 @@ const SignIn = () => {
   const handleSignIn = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/signin', { email, password });
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/signin`, { email, password });
       const { profilePhoto, UserId, token } = response.data;
 
       localStorage.setItem("token", token)

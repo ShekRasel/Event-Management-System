@@ -43,7 +43,7 @@ const SignUp = () => {
         formData.append('profilePhoto', profilePhoto, profilePhoto.name);
       }
 
-      const response = await axios.post('http://localhost:3000/api/signup', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/signup`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
