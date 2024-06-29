@@ -8,6 +8,7 @@ import { BsPeopleFill } from 'react-icons/bs';
 import { AiFillAppstore } from 'react-icons/ai';
 import { RiUserAddFill, RiLoginBoxFill, RiUserSharedFill } from 'react-icons/ri';
 
+
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [services, setServices] = useState([]);
@@ -18,35 +19,39 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const usersResponse = await axios.get('http://localhost:3000/api/admin/users', {
+        const usersResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUsers(usersResponse.data);
-
-        const adminResponse = await axios.get('http://localhost:3000/api/admin/profile', {
+  
+        // Check if the data is an array before setting it to state
+        if (Array.isArray(usersResponse.data)) {
+          setUsers(usersResponse.data);
+        } else {
+          console.error('Unexpected users response format:', usersResponse.data);
+        }
+  
+        const adminResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(adminResponse.data);
-        console.log(adminResponse.data.profilePhoto);
         setAdminProfilePhoto(adminResponse.data.profilePhoto);
-        
       } catch (error) {
         console.error('Error fetching users or admin profile:', error);
       }
     };
-
+  
     fetchData();
   }, []);
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const servicesResponse = await axios.get('http://localhost:3000/api/admin/services', {
+        const servicesResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/services`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -63,7 +68,7 @@ const AdminDashboard = () => {
   const handleDeleteUser = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3000/api/admin/users/${userId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -77,7 +82,7 @@ const AdminDashboard = () => {
   const handleDeleteService = async (serviceId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3000/api/admin/services/${serviceId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/admin/services/${serviceId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -112,7 +117,7 @@ const AdminDashboard = () => {
           <MdNotifications className="w-6 h-6 mr-2 cursor-pointer" />
           {adminProfilePhoto ? (
             <img
-              src={`http://localhost:3000/${adminProfilePhoto}`}
+              src={`${import.meta.env.VITE_API_BASE_URL}/${adminProfilePhoto}`}
               alt="Admin Profile"
               className="w-10 h-10 rounded-full cursor-pointer object-cover"
               onError={(e) => {
@@ -188,7 +193,7 @@ const AdminDashboard = () => {
                     <td className="border-b border-gray-300 text-sm flex justify-center outline-none mt-3">
                       {user.profilePhoto ? (
                         <img
-                          src={`http://localhost:3000/${user.profilePhoto}`}
+                          src={`${import.meta.env.VITE_API_BASE_URL}/${user.profilePhoto}`}
                           alt="Profile"
                           className="w-8 h-8 rounded-full object-cover"
                           onError={(e) => {

@@ -34,7 +34,7 @@ const AdminSignUp = () => {
 
     try {
       // Send POST request with formData
-      const response = await axios.post('http://localhost:3000/api/admin/signup', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/admin/signup`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data' // Set content type to multipart/form-data
         }
