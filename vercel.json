@@ -3,8 +3,10 @@
   "builds": [
     {
       "src": "frontend/package.json",
-      "use": "@vercel/node",
-      "config": { "distDir": "frontend/dist" }
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/dist"
+      }
     },
     {
       "src": "backend/package.json",
@@ -12,8 +14,10 @@
     },
     {
       "src": "admin/package.json",
-      "use": "@vercel/node",
-      "config": { "distDir": "admin/dist" }
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "admin/dist"
+      }
     }
   ],
   "routes": [
