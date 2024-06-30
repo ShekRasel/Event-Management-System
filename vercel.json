@@ -1,25 +1,24 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "frontend/package.json",
-        "use": "@vercel/node",
-        "config": { "distDir": "dist" }
-      },
-      {
-        "src": "backend/package.json",
-        "use": "@vercel/node"
-      },
-      {
-        "src": "admin/package.json",
-        "use": "@vercel/node",
-        "config": { "distDir": "dist" }
-      }
-    ],
-    "routes": [
-      { "src": "/api/(.*)", "dest": "/backend/$1" },
-      { "src": "/admin/(.*)", "dest": "/admin/dist/$1" },
-      { "src": "/(.*)", "dest": "/frontend/dist/$1" }
-    ]
-  }
-  
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/node",
+      "config": { "distDir": "frontend/dist" }
+    },
+    {
+      "src": "backend/package.json",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "admin/package.json",
+      "use": "@vercel/node",
+      "config": { "distDir": "admin/dist" }
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/backend/$1" },
+    { "src": "/admin/(.*)", "dest": "/admin/dist/$1" },
+    { "src": "/(.*)", "dest": "/frontend/dist/$1" }
+  ]
+}
