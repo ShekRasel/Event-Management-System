@@ -63,7 +63,7 @@ const Service = () => {
               className="w-full h-auto max-h-96 object-cover transition-transform duration-300 transform group-hover:scale-105"
             />
             <div className="absolute inset-0 flex flex-col justify-center items-center transition-opacity duration-300 bg-transparent group-hover:bg-black group-hover:bg-opacity-65">
-              <h1 className="text-white text-2xl sm:text-3xl  font-semibold mt-12 transition-all duration-300" style={{ color: 'white' }}>
+              <h1 className="text-slate-200 italic text-2xl sm:text-3xl  font-bold mt-12 transition-all duration-300" style={{ color: 'white' }}>
                 {service.title}
               </h1>
               <div className="flex flex-col items-center transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-4">

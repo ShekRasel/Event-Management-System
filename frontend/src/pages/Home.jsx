@@ -5,6 +5,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Faq from '../components/Faq';
 import Service from './Services';
+import Testimonials from '../components/Testimonials';
+import ComponentName from '../components/ComponentName';
 
 const Home = () => {
   const carouselSettings = {
@@ -46,11 +48,17 @@ const Home = () => {
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
           {/* Left Side */}
           <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
-            <h1 className="text-3xl md:text-7xl font-normal">
-              <span className="font-semibold md: ml-32" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'Red' }}>Your </span> <br />
-              <span className="font-semibold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'blue' }}>One-Stop-Shop </span> <br />
-              <span className="font-semibold" style={{ WebkitTextStrokeWidth: '1px', WebkitTextStrokeColor: 'green' }}>For Memorable Events</span>
-            </h1>
+          <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold leading-tight">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">
+              Your
+            </span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">
+              One-Stop-Shop
+            </span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500">
+              For Memorable Events
+            </span>
+          </h1>
           </div>
 
           {/* Right Side */}
@@ -80,7 +88,8 @@ const Home = () => {
                 video::-webkit-media-controls { display: none !important; }
                 video::-webkit-media-controls-enclosure { display: none !important; }
                 video::-webkit-media-controls-play-button { display: none !important; }
-              `}
+              `}import ComponentName from './../components/ComponentName';
+
             </style>
           </div>
         </div>
@@ -142,6 +151,8 @@ const Home = () => {
         </div>
       </section>
       <Service/>
+      <Testimonials/>
+      <ComponentName/>
       <Faq/>
       
     </>

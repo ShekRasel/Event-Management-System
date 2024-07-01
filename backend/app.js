@@ -8,6 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const contactRoute = require('./routes/contact')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,6 +41,7 @@ app.use('/api', authRoutes);
 app.use('/api', serviceRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/contact', contactRoute);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)

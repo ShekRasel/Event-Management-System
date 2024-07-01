@@ -8,15 +8,15 @@ import { BsPeopleFill } from 'react-icons/bs';
 import { AiFillAppstore } from 'react-icons/ai';
 import { RiUserAddFill, RiLoginBoxFill, RiUserSharedFill } from 'react-icons/ri';
 
-
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [services, setServices] = useState([]);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar initially closed
-  const [adminProfilePhoto, setAdminProfilePhoto] = useState(null); // Admin profile photo
+  const [contacts, setContacts] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [adminProfilePhoto, setAdminProfilePhoto] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUsers = async () => {
       try {
         const token = localStorage.getItem('token');
         const usersResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users`, {
@@ -24,14 +24,15 @@ const AdminDashboard = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-  
-        // Check if the data is an array before setting it to state
-        if (Array.isArray(usersResponse.data)) {
-          setUsers(usersResponse.data);
-        } else {
-          console.error('Unexpected users response format:', usersResponse.data);
-        }
-  
+        setUsers(usersResponse.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    const fetchAdminProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
         const adminResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -39,16 +40,16 @@ const AdminDashboard = () => {
         });
         setAdminProfilePhoto(adminResponse.data.profilePhoto);
       } catch (error) {
-        console.error('Error fetching users or admin profile:', error);
+        console.error('Error fetching admin profile:', error);
       }
     };
-  
-    fetchData();
+
+    fetchUsers();
+    fetchAdminProfile();
   }, []);
-  
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchServices = async () => {
       try {
         const token = localStorage.getItem('token');
         const servicesResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/services`, {
@@ -62,7 +63,25 @@ const AdminDashboard = () => {
       }
     };
 
-    fetchData();
+    fetchServices();
+  }, []);
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const contactsResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/admin/contacts`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setContacts(contactsResponse.data);
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+      }
+    };
+
+    fetchContacts();
   }, []);
 
   const handleDeleteUser = async (userId) => {
@@ -93,13 +112,26 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleDeleteContact = async (contactId) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/admin/contacts/${contactId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setContacts(contacts.filter((contact) => contact._id !== contactId));
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+    }
+  };
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-slate-200">
-      {/* Navbar */}
       <div className="flex justify-between items-center bg-gray-800 text-white px-4 py-2 fixed top-0 w-full z-10">
         <div className="flex items-center ml-16">
           <img src="/src/assets/logo.jpg" alt="Logo" className="w-10 h-10 mr-2 rounded-full" />
@@ -130,7 +162,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Sidebar */}
       <div
         className={`bg-gray-800 text-white ${isSidebarOpen ? 'w-60' : 'w-20'} p-4 md:mt-2 fixed left-0 h-screen overflow-y-auto z-20 transition-all duration-300`}
       >
@@ -168,9 +199,7 @@ const AdminDashboard = () => {
         </ul>
       </div>
 
-      {/* Main Content and Additional Sections */}
       <div className={`flex flex-col ml-20 mt-12 flex-grow md:ml-${isSidebarOpen ? '60' : '20'} md:mt-12 md:ml-24 transition-all duration-300`}>
-        {/* Users Section */}
         <div className="bg-white shadow-md rounded-lg p-4 overflow-x-auto mb-8">
           <h2 className="text-xl font-bold mb-4 text-center">Users</h2>
           <div className="max-h-96 overflow-y-auto">
@@ -219,7 +248,6 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Services Section */}
         <div className="bg-white shadow-md rounded-lg p-4 overflow-x-auto mb-8">
           <h2 className="text-xl font-bold mb-4 text-center">Booked Services</h2>
           <div className="max-h-96 overflow-y-auto">
@@ -253,7 +281,41 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Additional Sections */}
+        <div className="bg-white shadow-md rounded-lg p-4 overflow-x-auto mb-8">
+          <h2 className="text-xl font-bold mb-4 text-center">Contact Messages</h2>
+          <div className="max-h-96 overflow-y-auto">
+            <table className="w-full border-collapse">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="p-2 border-b border-gray-300 text-sm">Contact ID</th>
+                  <th className="p-2 border-b border-gray-300 text-sm">Name</th>
+                  <th className="p-2 border-b border-gray-300 text-sm">Email</th>
+                  <th className="p-2 border-b border-gray-300 text-sm">Message</th>
+                  <th className="p-2 border-b border-gray-300 text-sm">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {contacts.map((contact) => (
+                  <tr key={contact._id} className="hover:bg-gray-100 text-sm">
+                    <td className="border-b border-gray-300 text-sm text-center">{contact._id}</td>
+                    <td className="border-b border-gray-300 text-sm text-center">{contact.name}</td>
+                    <td className="border-b border-gray-300 text-sm text-center">{contact.email}</td>
+                    <td className="border-b border-gray-300 text-sm text-center">{contact.message}</td>
+                    <td className="border-b border-gray-300 text-sm text-center">
+                      <button
+                        onClick={() => handleDeleteContact(contact._id)}
+                        className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 focus:outline-none"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <div className="flex flex-col md:flex-row md:ml-4 md:mt-4">
           <div className="bg-white shadow-md rounded-lg p-4 mb-4 md:w-96">
             <div className="flex items-center">
